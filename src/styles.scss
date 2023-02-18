@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+.navbar-expand-lg .navbar-collapse .navbar-nav .nav-item .nav-link {
+    font-family: "Bookman Old Style";
+    font-style: italic;
+    font-size: 15px;
+}
+
+.navbar-expand-lg .navbar-brand {
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+    font-family: cursive;
+    text-shadow: blue;
+}
+
+.footer {
+    background-color: #e2e2e2;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    font-size: 15px;
+    border-width: 0px;
+    padding: 0px;
+    text-align: center;
+}

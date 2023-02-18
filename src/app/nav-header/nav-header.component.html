@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" th:fragment="nav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Just Happily Serving You!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${title}=='Dashboard' ? 'active' : ''" aria-current="page"
+                       href="#" th:href="@{/user/dashboard/1}">DASHBOARD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${title}=='Profile' ? 'active' : ''" href="#"
+                       th:href="@{/user/profile}">PROFILE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${title}=='Recharge' ? 'active' : ''" href="#"
+                       th:href="@{/user/recharge}">RECHARGE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${title}=='Login' ? 'active' : ''" href="#"
+                       th:href="@{/logout}">LOGOUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

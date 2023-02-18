@@ -1,1 +1,54 @@
-<p>login works!</p>
+<section class="theme-container">
+  <div class="text-center">
+    <h1>Smart Parceling</h1>
+    <p>One step Away from the game of mafia</p>
+  </div>
+  <div class="row align-items-center login">
+    <div class="d-flex justify-content-center">
+      <div class="d-block card border-primary" style="width:50%">
+        <h5 class="card-header">Login to your account</h5>
+        <div class="card-body">
+          <form class="form" method="post">
+            <div *ngIf="false" class="text-danger alert alert-danger">
+              Invalid username or password
+            </div>
+            <div *ngIf="false" class="text-success alert alert-success">
+              You are successfully logged out
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">User Name</label>
+              <input
+                type="text"
+                id="exampleInputEmail1"
+                name="username"
+                class="form-control"
+                placeholder="Username"
+                required
+                autofocus
+                autocomplete="off"
+              />
+              <div id="emailHelp" class="form-text"></div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Password</label
+              >
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="form-control"
+                id="exampleInputPassword1"
+              />
+            </div>
+            <div class="container text-center">
+              <button type="submit" class="btn btn-primary login_bot">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

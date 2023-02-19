@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'mafia', loadChildren: () => import('./mafia/mafia.module').then(m => m.MafiaModule) },
+  { path: 'signup', component: SignupComponent },
+  {
+    path: 'mafia',
+    loadChildren: () =>
+      import('./mafia/mafia.module').then((m) => m.MafiaModule),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,56 @@
+<section class="theme-container">
+    <div class="text-center pt-25 text-light">
+      <h1 class="mafia-heading">the game of Mafia</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="d-block card login mt-10 text-light">
+        <div class="card-header text-center">
+          <h3>Sign in to mafia</h3>
+        </div>
+        <div class="card-body">
+          <form class="form" method="post">
+            <div *ngIf="false" class="text-danger alert alert-danger">
+              Invalid username or password
+            </div>
+            <div *ngIf="false" class="text-success alert alert-success">
+              You are successfully logged out
+            </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                id="exampleInputEmail1"
+                name="username"
+                class="form-control dark-input"
+                placeholder="Username"
+                required
+                autofocus
+                autocomplete="off"
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="form-control dark-input"
+                id="exampleInputPassword1"
+              />
+            </div>
+            <div class="container text-center">
+              <button type="submit" class="btn btn-lg text-light">Sign in</button>
+              <h4>Or</h4>
+              <button class="btn btn-lg text-light google" type="button">
+                <img
+                  width="20px"
+                  alt="Google sign-in"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                />
+                Sign in with Google
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  

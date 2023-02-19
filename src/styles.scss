@@ -1,24 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
-.navbar-expand-lg .navbar-collapse .navbar-nav .nav-item .nav-link {
-    font-family: "Bookman Old Style";
-    font-style: italic;
-    font-size: 15px;
-}
-
-.navbar-expand-lg .navbar-brand {
-    font-size: 25px;
-    font-style: italic;
-    font-weight: bold;
-    font-family: cursive;
-    text-shadow: blue;
-}
 
 .footer {
-    background-color: #e2e2e2;
-    font-family: "Times New Roman";
-    font-weight: bold;
-    font-size: 15px;
-    border-width: 0px;
-    padding: 0px;
-    text-align: center;
+  background-color: #e2e2e2;
+  font-family: "Times New Roman";
+  font-weight: bold;
+  font-size: 15px;
+  border-width: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.pt-20 {
+  padding-top: 5rem;
+}
+
+.mt-20 {
+  margin-top: 5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.pt-25 {
+  padding-top: 6.5rem;
+}
+
+.dark-input {
+  background: rgba(33, 37, 41, 1) !important;
+  border: none !important;
+  margin: auto;
+  color: white !important;
+}
+
+.dark-input:focus,
+.dark-input:active {
+  box-shadow: 0 0 0 0.25rem rgba(247, 243, 246, 0.25) !important;
+}
+
+.btn {
+  font-size: medium !important;
+  background: -webkit-linear-gradient(to right, #434343, #000000);
+  background: linear-gradient(to right, #434343, #000000);
+  width: 8rem;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(247, 243, 246, 0.25);
+}
+
+.google {
+  width: 14rem !important;
+}
+
+.mafia-heading {
+  font-weight: bolder;
+  font-style: italic;
+  font-family: cursive;
+  color: cornsilk;
 }

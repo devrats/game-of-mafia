@@ -1,7 +1,17 @@
-.login{
-    min-height: 60vh;
+.theme-container {
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url(../../../assets/img/189658.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.theme-container{
-    overflow: hidden;
+.login {
+  background: transparent;
+  border: none;
+  width: 22rem;
+}
+
+.card-header{
+    border: none !important;
 }

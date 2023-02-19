@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" th:fragment="nav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Just Happily Serving You!</a>
+        <a class="navbar-brand logo text-light" href="#">M a f i a</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,20 +8,20 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${title}=='Dashboard' ? 'active' : ''" aria-current="page"
-                       href="#" th:href="@{/user/dashboard/1}">DASHBOARD</a>
+                    <a class="nav-link" aria-current="page"
+                       href="#">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${title}=='Profile' ? 'active' : ''" href="#"
-                       th:href="@{/user/profile}">PROFILE</a>
+                    <a class="nav-link" href="#"
+                     >Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${title}=='Recharge' ? 'active' : ''" href="#"
-                       th:href="@{/user/recharge}">RECHARGE</a>
+                    <a class="nav-link" href="/signup"
+                       >Sign in</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${title}=='Login' ? 'active' : ''" href="#"
-                       th:href="@{/logout}">LOGOUT</a>
+                    <a class="nav-link" href=""
+                       >Logout</a>
                 </li>
             </ul>
         </div>

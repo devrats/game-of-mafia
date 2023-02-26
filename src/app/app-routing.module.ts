@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
+import { DashboardComponent } from './mafia/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,6 +13,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./mafia/mafia.module').then((m) => m.MafiaModule),
   },
+  { path: 'mafia', redirectTo: 'mafia/dashboard', pathMatch: 'full' },
+  { path: 'mafia/dashboard', component: DashboardComponent },
 ];
 
 @NgModule({

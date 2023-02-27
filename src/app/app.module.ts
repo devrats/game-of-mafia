@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { NavSidebarComponent } from './nav-sidebar/nav-sidebar.component';
-
+import { NgCircleProgressModule } from 'ng-circle-progress';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +16,13 @@ import { NavSidebarComponent } from './nav-sidebar/nav-sidebar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    NgCircleProgressModule.forRoot({
+      radius: 40,
+      outerStrokeWidth: 4,
+      outerStrokeColor: "rgb(104,113,215)",
+      animationDuration: 300
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

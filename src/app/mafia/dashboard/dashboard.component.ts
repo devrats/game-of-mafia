@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CircleProgressComponent, CircleProgressOptions } from 'ng-circle-progress';
 
 @Component({
   selector: 'app-dashboard',

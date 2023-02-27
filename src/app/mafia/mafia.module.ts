@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MafiaRoutingModule } from './mafia-routing.module';
 import { MafiaComponent } from './mafia.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
-    MafiaRoutingModule
+    MafiaRoutingModule,
+    NgCircleProgressModule
   ]
 })
 export class MafiaModule { }

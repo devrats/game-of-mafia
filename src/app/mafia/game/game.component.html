@@ -1,0 +1,119 @@
+<div class="theme-dashboard">
+  <div class="dashboard-head mt-5">
+    <h3 class="text-light">Game : 123456</h3>
+    <p style="color: #79808f">Welcome Back, Devvrat</p>
+  </div>
+  <div class="dashboard-body">
+    <div class="row">
+      <div class="col-md-6 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <table class="table text-light">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">DP</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of [1, 2, 3, 4]">
+                  <th scope="row">{{ i }}</th>
+                  <td>
+                    <img
+                      src="../../../assets/img/peakpx.jpg"
+                      class="table-dp"
+                      alt=""
+                    />
+                  </td>
+                  <td>Devvrat Sharma</td>
+                  <td>
+                    <input
+                      type="button"
+                      *ngIf="i == 1"
+                      class="btn table-btn btn-success"
+                      value="Vote"
+                    />
+                    <input
+                      type="button"
+                      *ngIf="i == 2"
+                      class="btn table-btn btn-danger"
+                      value="Kill"
+                    />
+                    <input
+                      type="button"
+                      *ngIf="i == 3"
+                      class="btn table-btn btn-success"
+                      value="Save"
+                    />
+                    <input
+                      type="button"
+                      *ngIf="i == 4"
+                      class="btn table-btn btn-danger"
+                      value="Mafia"
+                      (click)="isMafia()"
+                    />
+                  </td>
+                  <td>In</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-head text-light">
+              <p>You are a</p>
+              <h3 for="">Villager</h3>
+              <p for="">Currently</p>
+              <h3>Mafias are Choosing Dead Body</h3>
+              <p>{{timeLeft}} Seconds Left....</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-5">
+        <div class="card">
+          <div class="card-header text-light">Chat Window</div>
+          <div class="card-body chat-window">
+            <ul>
+              <li *ngFor="let i of [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9]">
+                <div class="row">
+                  <div class="col-2 pe-0 d-flex justify-content-center">
+                    <img
+                      src="../../../assets/img/peakpx.jpg"
+                      class="message-dp"
+                      alt=""
+                    />
+                  </div>
+                  <div class="col-10 ps-0">
+                    <p class="message">Devvrat Sharma</p>
+                    <p class="message1">We should Kill Jai</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="input-group">
+              <input
+                type="text"
+                name="Message"
+                placeholder="Message"
+                class="form-control dark-input rounded-pill me-3"
+                id="Message"
+              />
+              <button class="btn btn-primary rounded-pill pl-1" type="submit">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

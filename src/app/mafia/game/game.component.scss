@@ -1,0 +1,41 @@
+.table-dp{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.table-btn {
+    border: none !important;
+    font-size: 12px !important;
+    display: block !important;
+}
+  
+  .table-btn:hover {
+    color: whitesmoke !important;
+    border: 5px !important;
+}
+
+.chat-window{
+    height: 300px;
+    overflow-y: scroll;
+    color: whitesmoke;
+}
+
+.message{
+    margin-bottom: 0px;
+    font-size: 10px;
+    color: #79808f;
+}
+
+.message1{
+    margin-bottom: 0px;
+    font-size: 12px;
+}
+
+.message-dp{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}

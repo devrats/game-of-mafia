@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(){}
+  constructor(private router: Router){}
 
   ngOnInit(): void {
   }
@@ -20,6 +21,10 @@ export class DashboardComponent implements OnInit {
       title: 'Game created successfully',
       html: 'Game Code : 123456 </br> Share Code With your Friends',
       confirmButtonText: 'Share Code'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['mafia/game']);
+      }
     })
   }
 

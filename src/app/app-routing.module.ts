@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { DashboardComponent } from './mafia/dashboard/dashboard.component';
+import { GameComponent } from './mafia/game/game.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   { path: 'mafia', redirectTo: 'mafia/dashboard', pathMatch: 'full' },
   { path: 'mafia/dashboard', component: DashboardComponent },
+  {path:'mafia/game', component: GameComponent}
 ];
 
 @NgModule({

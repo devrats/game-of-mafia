@@ -1,18 +1,54 @@
 .theme-container {
-    min-height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url(../../../assets/img/189658.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  .login {
-    background: transparent;
-    border: none;
-    width: 22rem;
-  }
-  
-  .card-header{
-      border: none !important;
-  }
-  
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url(../../../assets/img/189658.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login {
+  background: transparent;
+  border: none;
+  width: 22rem;
+}
+
+.card-header{
+    border: none !important;
+}
+
+.card{
+  background: transparent;
+  background-color: transparent !important;
+}
+
+.bn31 {
+  background-image: linear-gradient(to right, #006175 0%, #00a950 100%);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: #00a84f;
+  display: block;
+  height: 40px;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.bn31:hover {
+  color: #fff;
+}
+
+.bn31 .bn31span {
+  align-items: center;
+  background: #0e0e10;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+}
+
+.bn31:hover .bn31span {
+  background: transparent;
+}

@@ -21,7 +21,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       radius: 40,
       outerStrokeWidth: 4,
       outerStrokeColor: "rgb(104,113,215)",
-      animationDuration: 300
+      animationDuration: 2000
     })
   ],
   providers: [],

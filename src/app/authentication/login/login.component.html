@@ -37,16 +37,15 @@
             />
           </div>
           <div class="container text-center">
-            <button type="button" class="dark-btn btn-lg text-light" (click)="login()">log in</button>
+            <a class="bn31" (click)="login()"><span class="bn31span">Log in</span></a>
             <h4>Or</h4>
-            <button class="dark-btn btn-lg text-light google" (click)="loginThroughGoogle()" type="button">
-              <img
-                width="20px"
-                alt="Google sign-in"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
-              />
-              Login with Google
-            </button>
+            <a class="bn31" (click)="loginThroughGoogle()"><span class="bn31span">Login with <img
+              width="20px"
+              class="ms-2"
+              alt="Google sign-in"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+            />
+            </span></a>
           </div>
         </form>
       </div>

@@ -28,4 +28,8 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  gameDetails(){
+    this.router.navigate(['mafia/gamehistory']);
+  }
+
 }

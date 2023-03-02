@@ -1,0 +1,22 @@
+.table-dp {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.table-btn {
+  border: none !important;
+  font-size: 12px !important;
+  display: block !important;
+}
+
+.table-btn:hover {
+  color: whitesmoke !important;
+  border: 5px !important;
+}
+
+.round-details {
+  margin-bottom: 0.25rem;
+  font-size: 14px;
+}

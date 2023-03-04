@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { NavSidebarComponent } from './nav-sidebar/nav-sidebar.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       outerStrokeWidth: 4,
       outerStrokeColor: "rgb(104,113,215)",
       animationDuration: 2000
-    })
+    }),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

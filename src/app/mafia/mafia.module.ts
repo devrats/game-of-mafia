@@ -8,6 +8,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GameComponent } from './game/game.component';
 import { ErrorComponent } from './error/error.component';
 import { GameHistoryComponent } from './game-history/game-history.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,12 +18,15 @@ import { GameHistoryComponent } from './game-history/game-history.component';
     DashboardComponent,
     GameComponent,
     GameHistoryComponent,
-    ErrorComponent
+    ErrorComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,
     MafiaRoutingModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class MafiaModule { }

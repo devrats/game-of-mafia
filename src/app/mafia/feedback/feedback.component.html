@@ -1,0 +1,140 @@
+<div class="theme-dashboard">
+  <div class="dashboard-head mt-2">
+    <h3 class="text-light">Feedback</h3>
+    <p style="color: #79808f">Your feedback matters to us</p>
+  </div>
+  <div class="theme-container mt-2">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card text-light">
+          <div class="card-body" [formGroup]="rating">
+            <h4>We would like your feedback to improve our website...</h4>
+            <div class="section border-white border-bottom">
+              <p class="text-center">Did You like us!!</p>
+              <div class="app">
+                <div class="container">
+                  <div class="item">
+                    <label for="0">
+                      <input
+                        class="radio"
+                        type="radio"
+                        name="star"
+                        id="0"
+                        value="1"
+                        formControlName="star"
+                        (change)="change($event)"
+                      />
+                      <span>🤬</span>
+                    </label>
+                  </div>
+
+                  <div class="item">
+                    <label for="1">
+                      <input
+                        class="radio"
+                        type="radio"
+                        name="star"
+                        id="1"
+                        value="2"
+                        formControlName="star"
+                        (change)="change($event)"
+                      />
+                      <span>🙁</span>
+                    </label>
+                  </div>
+
+                  <div class="item">
+                    <label for="2">
+                      <input
+                        class="radio"
+                        type="radio"
+                        name="star"
+                        id="2"
+                        value="3"
+                        formControlName="star"
+                        (change)="change($event)"
+                      />
+                      <span>😶</span>
+                    </label>
+                  </div>
+
+                  <div class="item">
+                    <label for="3">
+                      <input
+                        class="radio"
+                        type="radio"
+                        name="star"
+                        id="3"
+                        value="4"
+                        formControlName="star"
+                        (change)="change($event)"
+                      />
+                      <span>😁</span>
+                    </label>
+                  </div>
+
+                  <div class="item">
+                    <label for="4">
+                      <input
+                        class="radio"
+                        type="radio"
+                        name="star"
+                        id="4"
+                        value="5"
+                        checked
+                        [checked]="true"
+                        formControlName="star"
+                        (change)="change($event)"
+                      />
+                      <span>😍</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <p class="text-center mt-2">{{ note }}</p>
+            </div>
+            <div class="section">
+              <p class="text-center">
+                please select your feedback catogory below!!
+              </p>
+              <div class="justify-content-center d-flex">
+                <input
+                  type="button"
+                  class="btn"
+                  [ngClass]="{ active: category == 'one' }"
+                  value="Suggestion"
+                  (click)="changeCategory($event)"
+                />
+                <input
+                  type="button"
+                  [ngClass]="{ active: category == 'two' }"
+                  class="btn"
+                  value="Some thing is not quite right"
+                  (click)="changeCategory($event)"
+                />
+                <input
+                  type="button"
+                  class="btn"
+                  [ngClass]="{ active: category == 'three' }"
+                  value="Compliment"
+                  (click)="changeCategory($event)"
+                />
+              </div>
+            </div>
+            <div class="section">
+              <p class="text-center">Please leave your feedback below!!</p>
+              <div class="justify-content-center d-flex">
+                <textarea class="form-control dark-input" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="justify-content-center d-flex mt-3 btn-section">
+              <a class="bn31"
+                ><span class="bn31span" (click)="submit()">Send</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

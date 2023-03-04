@@ -1,0 +1,74 @@
+.section {
+  // display: flex;
+  justify-content: center;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-bottom: 1px white solid;
+}
+
+.btn {
+  color: white;
+  border: 1px solid white;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.active {
+  border: 2px solid rgb(104, 113, 215) !important;
+  color: rgb(104, 113, 215) !important;
+}
+
+.dark-input {
+  background-color: rgba(20, 27, 45, 255) !important;
+}
+
+.bn31 {
+  width: 22rem;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.app {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  width: 70px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+.radio {
+  display: none;
+}
+.radio ~ span {
+  font-size: 3rem;
+  filter: grayscale(100);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.radio:checked ~ span {
+  filter: grayscale(0);
+  font-size: 4rem;
+}

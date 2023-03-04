@@ -6,6 +6,7 @@ import { ErrorComponent } from './mafia/error/error.component';
 import { GameHistoryComponent } from './mafia/game-history/game-history.component';
 import { DashboardComponent } from './mafia/dashboard/dashboard.component';
 import { GameComponent } from './mafia/game/game.component';
+import { FeedbackComponent } from './mafia/feedback/feedback.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'mafia/dashboard', component: DashboardComponent },
   {path:'mafia/game', component: GameComponent},
   {path:'mafia/gamehistory', component: GameHistoryComponent},
+  {path:'mafia/feedback', component: FeedbackComponent},
   {path:'**', component: ErrorComponent},
 ];
 

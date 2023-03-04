@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonService } from 'src/app/common.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +12,9 @@ export class GameComponent implements OnInit {
   mafia: boolean = true;
   timeLeft: number = 60;
   interval: any;
-  constructor() {}
+  constructor(private router : Router, private commonService: CommonService){
+    commonService.pageName.next('game');
+  }
 
   ngOnInit(): void {
     this.startTimer();

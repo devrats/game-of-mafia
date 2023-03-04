@@ -1,36 +1,38 @@
-<div class="theme-navbar">
-    <div class="heading">
-        <a class="navbar-brand text-light" href="#">Mafia</a>
+<div class="theme-navbar" *ngIf="isShowSideBar">
+  <div class="heading">
+    <a class="navbar-brand text-light" href="#">Mafia</a>
+  </div>
+  <div class="profile text-light">
+    <div class="d-flex justify-content-center mt-5">
+      <img
+        src="../../assets/img/peakpx.jpg"
+        alt="profile picture"
+        class="profile-picture border border-3"
+      />
     </div>
-    <div class="profile text-light">
-        <div class="d-flex justify-content-center mt-5">
-            <img src="../../assets/img/peakpx.jpg" alt="profile picture" class="profile-picture border border-3">
-        </div>
-        <div class="f-bold d-flex justify-content-center">
-            Devvrat Sharma
-        </div>
+    <div class="f-bold d-flex justify-content-center">Devvrat Sharma</div>
+  </div>
+  <div class="menu mt-3">
+    <label class="menu-head">Menu</label>
+    <div class="menu-body mt-3">
+      <ul>
+        <li>
+          <i class="fa fa-tachometer active" [ngClass]="{active:pageName=='dashboard'}" aria-hidden="true"></i>
+          <a href="mafia/dashboard" [ngClass]="{active:pageName=='dashboard'}">Dashboard</a>
+        </li>
+        <li>
+          <i class="fa fa-gamepad" aria-hidden="true" [ngClass]="{active:pageName=='game'}"></i>
+          <a href="mafia/game" [ngClass]="{active:pageName=='game'}">Game</a>
+        </li>
+        <li>
+          <i class="fa fa-comments" aria-hidden="true" [ngClass]="{active:pageName=='Feedback'}"></i>
+          <a href="mafia/feedback" [ngClass]="{active:pageName=='Feedback'}"> Feedback</a>
+        </li>
+        <li>
+          <i class="fa fa-sign-out" aria-hidden="true" ></i>
+          <a href="/">Log out</a>
+        </li>
+      </ul>
     </div>
-    <div class="menu mt-3">
-        <label class="menu-head">Menu</label>
-        <div class="menu-body mt-3">
-            <ul>
-                <li>
-                    <i class="fa fa-tachometer active" aria-hidden="true"></i>
-                    <a href="" class="active">Dashboard</a>
-                </li>
-                <li>
-                    <i class="fa fa-gamepad" aria-hidden="true"></i>
-                    <a href="#">Game</a>
-                </li>
-                <li>
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <a href="">Log out</a>
-                </li>
-                <li>
-                    <i class="fa fa-comments" aria-hidden="true"></i>
-                    <a href=""> Feedback</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+  </div>
 </div>

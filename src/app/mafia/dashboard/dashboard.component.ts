@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/common.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +10,9 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private commonService : CommonService){
+    commonService.pageName.next('dashboard');
+  }
 
   ngOnInit(): void {
   }

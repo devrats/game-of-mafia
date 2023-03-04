@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/common.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
-  constructor(private router : Router){}
+  constructor(private router : Router, private commonService: CommonService){
+    commonService.pageName.next('logIn');
+  }
 
   login(){
     this.router.navigate(['mafia/dashboard'])

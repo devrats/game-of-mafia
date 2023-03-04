@@ -8,6 +8,7 @@
     background-color: rgba(31,41,65,255);
     width: 16rem;
     padding: 1rem;
+    z-index: 100000;
 }
 
 .navbar-brand {
@@ -69,6 +70,14 @@ li:hover{
     color: rgb(104,113,215)
 }
 
+img{
+    height: 18px;
+    width: 18px;
+}
 
-
+@media screen and (max-width:425px) {
+    .theme-navbar{
+        width: 100%;
+    }
+}
     

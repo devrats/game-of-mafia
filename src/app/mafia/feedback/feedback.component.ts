@@ -61,4 +61,8 @@ export class FeedbackComponent implements OnInit {
       this.category = 'two'
     }
   }
+
+  openNavBar(){
+    document.getElementById('navBar')?.classList.remove('d-none');
+  }
 }

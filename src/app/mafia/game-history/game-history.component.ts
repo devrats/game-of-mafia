@@ -15,4 +15,8 @@ export class GameHistoryComponent implements OnInit {
     commonService.pageName.next('gameHistory');
   }
 
+  openNavBar(){
+    document.getElementById('navBar')?.classList.remove('d-none');
+  }
+
 }

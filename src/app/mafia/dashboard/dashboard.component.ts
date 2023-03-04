@@ -35,4 +35,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['mafia/gamehistory']);
   }
 
+  openNavBar(){
+    document.getElementById('navBar')?.classList.remove('d-none');
+  }
+
 }

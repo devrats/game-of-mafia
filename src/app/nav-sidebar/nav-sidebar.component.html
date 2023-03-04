@@ -1,6 +1,9 @@
-<div class="theme-navbar" *ngIf="isShowSideBar">
+<div class="theme-navbar d-none d-md-block" *ngIf="isShowSideBar" id="navBar">
   <div class="heading">
     <a class="navbar-brand text-light" href="#">Mafia</a>
+    <div class="pull-right mt-2 d-block d-md-none">
+        <img (click)="closeNavBar()" src="../../assets/img/pngaaa.com-966788.png" alt="">
+    </div>
   </div>
   <div class="profile text-light">
     <div class="d-flex justify-content-center mt-5">

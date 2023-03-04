@@ -32,13 +32,17 @@ export class GameComponent implements OnInit {
   }
 
   isMafia() {
-    Swal.fire({
-      icon: 'success',
-      title: 'You Guessed it Right',
-    });
     // Swal.fire({
-    //   icon: 'error',
-    //   title: 'You Missed The Chance',
-    // })
+    //   icon: 'success',
+    //   title: 'You Guessed it Right',
+    // });
+    Swal.fire({
+      icon: 'error',
+      title: 'You Missed The Chance',
+    })
+  }
+
+  openNavBar(){
+    document.getElementById('navBar')?.classList.remove('d-none');
   }
 }

@@ -26,4 +26,8 @@ export class NavSidebarComponent implements OnInit {
       }
     })
   }
+
+  closeNavBar(){
+    document.getElementById('navBar')?.classList.add('d-none');
+  }
 }

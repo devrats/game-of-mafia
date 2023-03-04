@@ -101,28 +101,36 @@
               <p class="text-center">
                 please select your feedback catogory below!!
               </p>
-              <div class="justify-content-center d-flex">
-                <input
+              <div class="app">
+                <div class="container">
+                  <div class="item">
+                    <input
                   type="button"
                   class="btn"
                   [ngClass]="{ active: category == 'one' }"
                   value="Suggestion"
                   (click)="changeCategory($event)"
                 />
-                <input
+                  </div>
+                  <div class="item">
+                    <input
                   type="button"
                   [ngClass]="{ active: category == 'two' }"
                   class="btn"
                   value="Some thing is not quite right"
                   (click)="changeCategory($event)"
                 />
-                <input
+                  </div>
+                  <div class="item">
+                    <input
                   type="button"
                   class="btn"
                   [ngClass]="{ active: category == 'three' }"
                   value="Compliment"
                   (click)="changeCategory($event)"
                 />
+                  </div>
+                </div>
               </div>
             </div>
             <div class="section">

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../authentication/auth.service';
 import { CommonService } from '../common.service';
 
 @Component({
@@ -15,7 +17,7 @@ export class NavSidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private commonService : CommonService){
+  constructor(private commonService : CommonService, private auth: AuthService, private router : Router){
     commonService.pageName.subscribe(x => {
       console.log(x);
       this.pageName = x;
@@ -29,5 +31,10 @@ export class NavSidebarComponent implements OnInit {
 
   closeNavBar(){
     document.getElementById('navBar')?.classList.add('d-none');
+  }
+
+  logOut(){
+    this.auth.signOut();
+    this.router.navigate(['login']);
   }
 }

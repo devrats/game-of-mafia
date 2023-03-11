@@ -26,6 +26,7 @@ export class SignupComponent implements OnInit {
 
   initForm(){
     this.signUpForm = this.fb.group({
+      name:['',[Validators.required]],
       email:['',[Validators.required]],
       password:['',[Validators.required]]
     })
@@ -33,8 +34,15 @@ export class SignupComponent implements OnInit {
 
   async signUp(){
     console.log(this.signUpForm);
-    let res = await this.auth.createAccount(this.signUpForm.get('email')?.value ,this.signUpForm.get('password')?.value);
-    
+    let data = {
+      name: this.signUpForm.get('name')?.value,
+      email: this.signUpForm.get('email')?.value,
+      password: this.signUpForm.get('password')?.value
+    }
+    let y = await this.auth.getRequest(data,'signup');
+    if(y.status == 200){
+      this.router.navigate(['login']);
+    }    
   }
 
 }

@@ -31,9 +31,9 @@
           <i class="fa fa-comments" aria-hidden="true" [ngClass]="{active:pageName=='feedback'}"></i>
           <a href="mafia/feedback" [ngClass]="{active:pageName=='feedback'}"> Feedback</a>
         </li>
-        <li>
+        <li (click)="logOut()" class="text-light">
           <i class="fa fa-sign-out" aria-hidden="true" ></i>
-          <a href="/">Log out</a>
+          <a>Log out</a>
         </li>
       </ul>
     </div>

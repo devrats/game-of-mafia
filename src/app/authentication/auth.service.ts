@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import { async, Subject } from 'rxjs';
 import axios from 'axios';
@@ -70,24 +71,13 @@ export class AuthService {
     };
   }
 
-  async createAccount(email: any, password: any): Promise<number> {
-    let res = 5;
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        res = 1;
-        return res;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-        res = 0;
-        return res;
-      });
-    return res;
+  async signOut(){
+    signOut(this.auth).then(() => {
+      console.log("sign out");
+    }).catch((error) => {
+      // An error happened.
+    });
+    
   }
+
 }

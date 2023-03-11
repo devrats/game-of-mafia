@@ -8,11 +8,15 @@ import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { NavSidebarComponent } from './nav-sidebar/nav-sidebar.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './authentication/login/login.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavHeaderComponent,
-    NavSidebarComponent
+    NavSidebarComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

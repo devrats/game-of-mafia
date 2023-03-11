@@ -8,7 +8,7 @@
         <h3>Login to your account</h3>
       </div>
       <div class="card-body">
-        <form class="form" method="post">
+        <form class="form" [formGroup]="signUpForm">
           <div *ngIf="false" class="text-danger alert alert-danger">
             Invalid username or password
           </div>
@@ -25,6 +25,7 @@
               required
               autofocus
               autocomplete="off"
+              formControlName="email"
             />
           </div>
           <div class="mb-3">
@@ -34,10 +35,11 @@
               placeholder="Password"
               class="form-control dark-input"
               id="exampleInputPassword1"
+              formControlName="password"
             />
           </div>
           <div class="container text-center">
-            <a class="bn31" (click)="login()"><span class="bn31span">Sign in</span></a>
+            <a class="bn31" (click)="signUp()"><span class="bn31span">Sign Up</span></a>
           </div>
         </form>
       </div>

@@ -17,34 +17,34 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private commonService: CommonService,
     private auth: AuthService,
-    private fb : FormBuilder
+    private fb: FormBuilder
   ) {
     commonService.pageName.next('logIn');
     this.initForm();
-    auth.principle.subscribe(async x=>{
-      let y = await auth.getRequest(x,'login');
-      if(y.status == 200){
-        router.navigate(['mafia/dashboard']);
-      }
-    })
+    auth.principle.subscribe(async (x) => {
+      let y = await auth.getRequest(x, 'login');
+      console.log(y);
+      sessionStorage.setItem('token', y.jwt);
+      router.navigate(['mafia/dashboard']);
+    });
   }
 
-  initForm(){
+  initForm() {
     this.loginForm = this.fb.group({
-      email:['',[Validators.required]],
-      password:['',[Validators.required]]
-    })
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
   }
 
   async login() {
     console.log(this.loginForm);
     let data = {
       email: this.loginForm.get('email')?.value,
-      password: this.loginForm.get('password')?.value
-    }
-    let y = await this.auth.getRequest(data,'signin');
+      password: this.loginForm.get('password')?.value,
+    };
+    let y = await this.auth.getRequest(data, 'signin');
     console.log(y);
-    if(y.status == 200){
+    if (y.status == 200) {
       this.router.navigate(['mafia/dashboard']);
     }
   }

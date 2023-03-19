@@ -64,7 +64,9 @@ export class AuthService {
   async getRequest(data:any, url : string){
     try{
       let res = await axios.post('http://localhost:3000/' + url, data, this.config)
-      return res
+      if(res.status == 200){
+        return res.data;
+      }
     } catch(error: any) {
       console.log(error);
       return error
@@ -73,6 +75,7 @@ export class AuthService {
 
   async signOut(){
     signOut(this.auth).then(() => {
+      sessionStorage.clear();
       console.log("sign out");
     }).catch((error) => {
       // An error happened.

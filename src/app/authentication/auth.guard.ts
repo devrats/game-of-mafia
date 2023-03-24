@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-      debugger
       let token = sessionStorage.getItem('token');
       if(token!=null){
         return true;

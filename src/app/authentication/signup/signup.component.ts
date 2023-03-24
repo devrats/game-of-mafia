@@ -12,6 +12,7 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
+  errorMsg : any = '';
   ngOnInit(): void {}
 
   constructor(
@@ -40,9 +41,11 @@ export class SignupComponent implements OnInit {
       password: this.signUpForm.get('password')?.value
     }
     let y = await this.auth.getRequest(data,'signup');
-    if(y.status == 200){
-      this.router.navigate(['login']);
-    }    
+    if(y.code==200){
+      this.router.navigate(['mafia/dashboard']);
+    } else{
+      this.errorMsg = y.data
+    }
   }
 
 }

@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  errorMsg : any = "";
   ngOnInit(): void {}
 
   constructor(
@@ -23,9 +24,11 @@ export class LoginComponent implements OnInit {
     this.initForm();
     auth.principle.subscribe(async (x) => {
       let y = await auth.getRequest(x, 'login');
-      console.log(y);
-      sessionStorage.setItem('token', y.jwt);
-      router.navigate(['mafia/dashboard']);
+      if(y.code==200){
+        this.router.navigate(['mafia/dashboard']);
+      } else{
+        this.errorMsg = y.data
+      }
     });
   }
 
@@ -44,8 +47,10 @@ export class LoginComponent implements OnInit {
     };
     let y = await this.auth.getRequest(data, 'signin');
     console.log(y);
-    if (y.status == 200) {
+    if(y.code==200){
       this.router.navigate(['mafia/dashboard']);
+    } else{
+      this.errorMsg = y.data
     }
   }
 

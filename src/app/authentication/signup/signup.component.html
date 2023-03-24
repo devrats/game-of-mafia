@@ -7,13 +7,10 @@
       <div class="card-header text-center">
         <h3>Login to your account</h3>
       </div>
-      <div class="card-body">
+      <div class="card-body pt-0">
         <form class="form" [formGroup]="signUpForm">
-          <div *ngIf="false" class="text-danger alert alert-danger">
-            Invalid username or password
-          </div>
-          <div *ngIf="false" class="text-success alert alert-success">
-            You are successfully logged out
+          <div *ngIf="errorMsg" class="text-danger text-center mb-3">
+            {{errorMsg}}
           </div>
           <div class="mb-3">
             <input

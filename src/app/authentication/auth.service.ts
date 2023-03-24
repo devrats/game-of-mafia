@@ -27,10 +27,9 @@ export class AuthService {
   principle: Subject<any> = new Subject<any>();
   config = {
     headers: {
-      'Content-Type': 'application/JSON'
-    }
+      'Content-Type': 'application/JSON',
+    },
   };
-
 
   app = initializeApp(this.firebaseConfig);
   analytics = getAnalytics(this.app);
@@ -61,26 +60,35 @@ export class AuthService {
       });
   }
 
-  async getRequest(data:any, url : string){
-    try{
-      let res = await axios.post('http://localhost:3000/' + url, data, this.config)
-      if(res.status == 200){
-        return res.data;
+  async getRequest(data: any, url: string) {
+    try {
+      let res = await axios.post(
+        'http://localhost:3000/' + url,
+        data,
+        this.config
+      );
+      if (res.status == 200) {
+        sessionStorage.setItem('token', res.data.jwt);
+        return { data: res.data, code: 200 };
       }
-    } catch(error: any) {
+      if (res.status == 201) {
+        console.log(res.data);
+        return { data: res.data, code: 201 };
+      }
+    } catch (error: any) {
       console.log(error);
-      return error
-    };
+      return error;
+    }
   }
 
-  async signOut(){
-    signOut(this.auth).then(() => {
-      sessionStorage.clear();
-      console.log("sign out");
-    }).catch((error) => {
-      // An error happened.
-    });
-    
+  async signOut() {
+    signOut(this.auth)
+      .then(() => {
+        sessionStorage.clear();
+        console.log('sign out');
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   }
-
 }

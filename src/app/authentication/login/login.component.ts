@@ -23,11 +23,10 @@ export class LoginComponent implements OnInit {
     commonService.pageName.next('logIn');
     this.initForm();
     auth.principle.subscribe(async (x) => {
-      let y = await auth.getRequest(x, 'login');
-      if(y.code==200){
+      if(x.code==200){
         this.router.navigate(['mafia/dashboard']);
       } else{
-        this.errorMsg = y.data
+        this.errorMsg = x.data
       }
     });
   }

@@ -38,13 +38,14 @@ export class AuthService {
   auth = getAuth();
   async signInWithGoogle() {
     signInWithPopup(this.auth, this.provider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
-        this.principle.next(user);
+        let y = await this.getRequest(user, 'login');
+        this.principle.next(y);
         // return res;
       })
       .catch((error) => {

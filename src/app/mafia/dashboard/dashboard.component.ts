@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit {
       'usergamehistory?uid=' + data.uid
     );
     console.log(res);
-    debugger
     if (res.code == 200) {
       this.gameHistory = res.data.data.gameHistory;
       this.gameMafia = res.data.data.gameMafia;

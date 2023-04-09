@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/common.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-feedback',
@@ -11,7 +12,7 @@ export class FeedbackComponent implements OnInit {
   note: string = '';
   star: number = 1;
   rating!: FormGroup;
-  category = 'three'
+  category = 'Suggestion'
   ngOnInit(): void {}
 
   constructor(
@@ -24,13 +25,27 @@ export class FeedbackComponent implements OnInit {
 
   buildForm() {
     this.rating = this.formBuilder.group({
-      star: [5, [Validators.required]],
-      comments: ['']
+      star: ['', [Validators.required]],
+      comments: [''],
+      type: ['Suggestion']
     });
   }
 
-  submit(){
+  async submit(){
     console.log(this.rating);
+    let data = {
+      star: this.rating.get('star')?.value,
+      comments : this.rating.get('comments')?.value,
+      type: this.rating.get('type')?.value,
+      uid: sessionStorage.getItem('uId')
+    }
+    let res = await this.commonService.postRequest(data, 'feedback');
+    if(res.code==200){
+      Swal.fire({
+        icon: 'success',
+        title: 'Thanks For Your Feedback',
+      })
+    }
   }
 
   change(event :any){
@@ -54,12 +69,13 @@ export class FeedbackComponent implements OnInit {
   changeCategory(event:any){
     let val = event.target.value;
     if(val == 'Suggestion'){
-      this.category = 'one'
+      this.category = 'Suggestion'
     } else if(val == 'Compliment'){
-      this.category = 'three'
+      this.category = 'Compliment'
     } else{
-      this.category = 'two'
+      this.category = 'Issue'
     }
+    this.rating.get('type')?.setValue(this.category);
   }
 
   openNavBar(){

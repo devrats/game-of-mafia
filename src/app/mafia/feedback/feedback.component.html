@@ -107,7 +107,7 @@
                     <input
                   type="button"
                   class="btn"
-                  [ngClass]="{ active: category == 'one' }"
+                  [ngClass]="{ active: category == 'Suggestion' }"
                   value="Suggestion"
                   (click)="changeCategory($event)"
                 />
@@ -115,9 +115,9 @@
                   <div class="item">
                     <input
                   type="button"
-                  [ngClass]="{ active: category == 'two' }"
+                  [ngClass]="{ active: category == 'Issue' }"
                   class="btn"
-                  value="Some thing is not quite right"
+                  value="Issue"
                   (click)="changeCategory($event)"
                 />
                   </div>
@@ -125,7 +125,7 @@
                     <input
                   type="button"
                   class="btn"
-                  [ngClass]="{ active: category == 'three' }"
+                  [ngClass]="{ active: category == 'Compliment' }"
                   value="Compliment"
                   (click)="changeCategory($event)"
                 />
@@ -136,7 +136,7 @@
             <div class="section">
               <p class="text-center">Please leave your feedback below!!</p>
               <div class="justify-content-center d-flex">
-                <textarea class="form-control dark-input" rows="3"></textarea>
+                <textarea class="form-control dark-input" rows="3" formControlName="comments"></textarea>
               </div>
             </div>
             <div class="justify-content-center d-flex mt-3 btn-section">

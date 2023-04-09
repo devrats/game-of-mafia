@@ -36,4 +36,26 @@ export class CommonService {
       return error;
     }
   }
+
+  async postRequest(data: any, url: string) {
+    try {
+      console.log(data);
+      let res = await axios.post(
+        'http://localhost:3000/' + url,
+        data,
+        this.config
+      );
+      if (res.status == 200) {
+        console.log(res.data);
+        return { data: res.data, code: 200 };
+      }
+      if (res.status == 201) {
+        console.log(res.data);
+        return { data: res.data, code: 201 };
+      }
+    } catch (error: any) {
+      console.log(error);
+      return error;
+    }
+  }
 }

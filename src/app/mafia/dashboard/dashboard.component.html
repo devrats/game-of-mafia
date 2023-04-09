@@ -19,43 +19,18 @@
   </div>
   <div class="dashboard-head mt-5">
     <h3 class="text-light">Dashboard</h3>
-    <p style="color: #79808f">Welcome Back, Devvrat</p>
+    <p style="color: #79808f">Welcome Back, {{displayName}}</p>
   </div>
   <div class="dashboard-body">
     <div class="row">
       <div class="col-lg-3 col-md-4 col-sm-6 mt-5">
         <div class="card">
           <div class="card-body">
-            <div class="card-head text-light">Games Played</div>
-            <div class="card-bod">10</div>
-            <div class="d-flex align-items-center justify-content-center">
-              <circle-progress class="progress-circle"
-              [percent]="100"
-              [radius]="40"
-              [outerStrokeWidth]="6"
-              [innerStrokeWidth]="6"
-              [space]="-6"
-              [innerStrokeColor]="'#79808f'"
-              [outerStrokeColor]="'rgb(104,113,215)'"
-              [animation]="true"
-              [animationDuration]="1000"
-              [titleColor]="'white'"
-              [subtitleColor]="'White'"
-              [unitsColor]="'white'"
-              [showInnerStroke]="true"
-            ></circle-progress>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-5">
-        <div class="card">
-          <div class="card-body">
             <div class="card-head text-light">Mafia</div>
-            <div class="card-bod">3</div>
+            <div class="card-bod">{{gameMafia}}</div>
             <div class="d-flex align-items-center justify-content-center">
               <circle-progress class="progress-circle"
-              [percent]="30"
+              [percent]="(gameMafia/gamePlayed)*100"
               [radius]="40"
               [outerStrokeWidth]="6"
               [innerStrokeWidth]="6"
@@ -77,10 +52,10 @@
         <div class="card">
           <div class="card-body">
             <div class="card-head text-light">Villagers</div>
-            <div class="card-bod">7</div>
+            <div class="card-bod">{{gameVillager}}</div>
             <div class="d-flex align-items-center justify-content-center">
               <circle-progress class="progress-circle"
-              [percent]="70"
+              [percent]="(gameVillager/gamePlayed)*100"
               [radius]="40"
               [outerStrokeWidth]="6"
               [innerStrokeWidth]="6"
@@ -102,10 +77,35 @@
         <div class="card">
           <div class="card-body">
             <div class="card-head text-light">Games Winned</div>
-            <div class="card-bod">4</div>
+            <div class="card-bod">{{gameWin}}</div>
             <div class="d-flex align-items-center justify-content-center">
               <circle-progress class="progress-circle"
-              [percent]="40"
+              [percent]="(gameWin/gamePlayed)*100"
+              [radius]="40"
+              [outerStrokeWidth]="6"
+              [innerStrokeWidth]="6"
+              [space]="-6"
+              [innerStrokeColor]="'#79808f'"
+              [outerStrokeColor]="'rgb(104,113,215)'"
+              [animation]="true"
+              [animationDuration]="1000"
+              [titleColor]="'white'"
+              [subtitleColor]="'White'"
+              [unitsColor]="'white'"
+              [showInnerStroke]="true"
+            ></circle-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-head text-light">Games Played</div>
+            <div class="card-bod">{{gameLoose}}</div>
+            <div class="d-flex align-items-center justify-content-center">
+              <circle-progress class="progress-circle"
+              [percent]="(gameLoose/gamePlayed)*100"
               [radius]="40"
               [outerStrokeWidth]="6"
               [innerStrokeWidth]="6"
@@ -168,11 +168,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>123456</td>
-                  <td>Villagers</td>
-                  <td>Win</td>
+                <tr *ngFor="let item of gameHistory; let i = index">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{item.code}}</td>
+                  <td>{{item.role}}</td>
+                  <td>{{item.result}}</td>
                   <td>
                     <input type="button" class="btn card-btn" value="Details" (click)="gameDetails()"/>
                   </td>

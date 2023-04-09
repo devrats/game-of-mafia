@@ -6,37 +6,64 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  displayName = sessionStorage.getItem('displayName') || '';
+  gameHistory: any;
+  gameMafia!: number;
+  gamePlayed!: number;
+  gameVillager!: number;
+  gameWin!: number;
+  gameLoose!: number;
 
-  constructor(private router: Router, private commonService : CommonService){
+  constructor(private router: Router, private commonService: CommonService) {
     commonService.pageName.next('dashboard');
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.loadData();
   }
 
-  createGame(){
-    console.log("hello");
+  async loadData() {
+    let data = {
+      uid: sessionStorage.getItem('uId'),
+    };
+    let res = await this.commonService.getRequest(
+      data,
+      'usergamehistory?uid=' + data.uid
+    );
+    console.log(res);
+    debugger
+    if (res.code == 200) {
+      this.gameHistory = res.data.data.gameHistory;
+      this.gameMafia = res.data.data.gameMafia;
+      this.gamePlayed = res.data.data.gamePlayed;
+      this.gameVillager = res.data.data.gameVillager;
+      this.gameWin = res.data.data.gameWin;
+      this.gameLoose = this.gamePlayed - this.gameWin;
+    }
+  }
+
+  createGame() {
+    console.log('hello');
     Swal.fire({
       icon: 'success',
       title: 'Game created successfully',
       html: 'Game Code : 123456 </br> Share Code With your Friends',
-      confirmButtonText: 'Share Code'
+      confirmButtonText: 'Share Code',
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate(['mafia/game']);
       }
-    })
+    });
   }
 
-  gameDetails(){
+  gameDetails() {
     this.router.navigate(['mafia/gamehistory']);
   }
 
-  openNavBar(){
+  openNavBar() {
     document.getElementById('navBar')?.classList.remove('d-none');
   }
-
 }

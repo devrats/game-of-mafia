@@ -63,13 +63,19 @@ export class AuthService {
 
   async getRequest(data: any, url: string) {
     try {
+      console.log(data);
       let res = await axios.post(
         'http://localhost:3000/' + url,
         data,
         this.config
       );
       if (res.status == 200) {
+        console.log(res.data);
         sessionStorage.setItem('token', res.data.jwt);
+        sessionStorage.setItem('uId', res.data.uid);
+        sessionStorage.setItem('email', res.data.email);
+        sessionStorage.setItem('displayName', res.data.displayName);
+        sessionStorage.setItem('pic', res.data.photo);
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {

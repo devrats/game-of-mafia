@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
   async signUp(){
     console.log(this.signUpForm);
     let data = {
-      name: this.signUpForm.get('name')?.value,
+      displayName: this.signUpForm.get('name')?.value,
       email: this.signUpForm.get('email')?.value,
       password: this.signUpForm.get('password')?.value
     }

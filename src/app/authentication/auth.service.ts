@@ -23,6 +23,7 @@ export class AuthService {
     messagingSenderId: '159102484359',
     appId: '1:159102484359:web:38d8322bdbc77315441d22',
     measurementId: 'G-X283NRB22E',
+    databaseURL: 'https://mafia-ce294-default-rtdb.firebaseio.com',
   };
   principle: Subject<any> = new Subject<any>();
   config = {

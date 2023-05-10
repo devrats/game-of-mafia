@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
   <div class="dashboard-head mt-5">
-    <h3 class="text-light">Game : 123456</h3>
+    <h3 class="text-light">Game : {{gameCode}}</h3>
     <p style="color: #79808f">Welcome Back, Devvrat</p>
   </div>
   <div class="dashboard-body">
@@ -23,20 +23,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let i of [1, 2, 3, 4]">
-                  <th scope="row">{{ i }}</th>
+                <tr *ngFor="let item of players; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
                   <td>
                     <img
-                      src="../../../assets/img/peakpx.jpg"
+                      [src]="item.dp"
                       class="table-dp"
                       alt=""
                     />
                   </td>
-                  <td>Devvrat Sharma</td>
+                  <td>{{item.name}}</td>
                   <td>
                     <input
                       type="button"
-                      *ngIf="i == 1"
+                      *ngIf="i == 0"
                       class="btn table-btn btn-success"
                       value="Vote"
                     />

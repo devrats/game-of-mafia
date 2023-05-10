@@ -137,7 +137,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-5">
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-5" [formGroup]="gameCodeForm">
         <div class="card">
           <div class="card-body">
             <div class="card-head text-light">
@@ -145,11 +145,12 @@
               <input
                 type="text"
                 name="join"
+                formControlName="gameCode"
                 id="join"
                 class="form-control dark-input mt-2 rounded-pill"
                 placeholder="Game Code"
               />
-              <button type="submit" class="btn card-btn mt-2">Join</button>
+              <button type="submit" class="btn card-btn mt-2" (click)="joinGame()">Join</button>
             </div>
           </div>
         </div>

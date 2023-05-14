@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { child, get, getDatabase, push } from 'firebase/database';
+import { child, get, getDatabase, push, update } from 'firebase/database';
 import { ref, set } from 'firebase/database';
 import { AuthService } from './authentication/auth.service';
 import { onValue } from 'firebase/database';
@@ -12,6 +12,8 @@ import { onValue } from 'firebase/database';
 export class CommonService {
   principle: Subject<any> = new Subject<any>();
   player: Subject<any> = new Subject<any>();
+  currStatus: Subject<any> = new Subject<any>();
+  startGame = 0;
   config = {
     headers: {
       'Content-Type': 'application/JSON',
@@ -65,7 +67,8 @@ export class CommonService {
     set(ref(db, 'modgame/' + gameCode), {
       uid: uid,
       gameCode: gameCode,
-      player: {},
+      player: [],
+      gameStart: 0,
     });
   }
 
@@ -75,6 +78,8 @@ export class CommonService {
       uid: uid,
       gameCode: gameCode,
       players: [],
+      gameStart: 0,
+      currStatus : 'nothing'
     });
   }
 
@@ -91,9 +96,14 @@ export class CommonService {
       if (data.uid == sessionStorage.getItem('uId')) {
         sessionStorage.setItem('isMod', 'true');
         this.player.next(data.players);
+        this.currStatus.next(data.currStatus);
+        this.startGame = data.gameStart;
       } else {
         sessionStorage.setItem('isMod', 'false');
         this.player.next(data.players);
+        console.log(data.currStatus);
+        this.currStatus.next(data.currStatus);
+        this.startGame = data.gameStart;
       }
     });
   }
@@ -101,15 +111,15 @@ export class CommonService {
   async joinGame() {
     const db = getDatabase();
     console.log(sessionStorage.getItem('gameCode'));
-    try{
+    try {
       let dbRef = ref(
         db,
         'modgame/' + sessionStorage.getItem('gameCode') + '/players'
       );
-      let  newRef = push(dbRef);
+      let newRef = push(dbRef);
       set(newRef, {
-        uid : sessionStorage.getItem('uId'),
-        key: newRef.key
+        uid: sessionStorage.getItem('uId'),
+        key: newRef.key,
       });
       dbRef = ref(
         db,
@@ -117,12 +127,38 @@ export class CommonService {
       );
       newRef = push(dbRef);
       set(newRef, {
-        uid : sessionStorage.getItem('uId'),
-        key: newRef.key
+        uid: sessionStorage.getItem('uId'),
+        key: newRef.key,
       });
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
-    
+  }
+
+  async gameStart(players : any) {
+    const db = getDatabase();
+    try {
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        gameStart: 1,
+      });
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        gameStart: 1,
+      });
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        players: players,
+      });
+      players.map((x:any)=>x.role = '')
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        players: players,
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        currStatus: 'whoAmI',
+      });
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        currStatus: 'whoAmI',
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

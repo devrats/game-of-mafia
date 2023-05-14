@@ -60,7 +60,7 @@
                       (click)="isMafia()"
                     />
                   </td>
-                  <td>In</td>
+                  <td>{{item.status}}</td>
                 </tr>
               </tbody>
             </table>
@@ -72,15 +72,17 @@
           <div class="card-body">
             <div class="card-head text-light">
               <p>You are a</p>
-              <h3 for="">Villager</h3>
-              <p for="">Currently</p>
+              <h3 *ngIf="!isMod">{{role}}</h3>
+              <h3 *ngIf="isMod">Moderator</h3>
+              <p>Currently</p>
               <h3>Mafias are Choosing Dead Body</h3>
               <p>{{timeLeft}} Seconds Left....</p>
+              <button *ngIf="isMod" type="submit" class="btn card-btn mt-2" (click)="startGame()">Start Game</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6 mt-5">
+      <div class="col-md-6 mt-5" *ngIf="role == 'Mafia'">
         <div class="card">
           <div class="card-header text-light">Chat Window</div>
           <div class="card-body chat-window">

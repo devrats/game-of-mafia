@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
   gameStarted = false;
   votes: any = null;
   votesKills = null;
-  status:any = null;
+  status: any = null;
   constructor(private router: Router, private commonService: CommonService) {
     commonService.pageName.next('game');
   }
@@ -43,14 +43,15 @@ export class GameComponent implements OnInit {
           if (Object.prototype.hasOwnProperty.call(x, key)) {
             var val = x[key];
             console.log(val);
-            this.getPlayerData(val.uid, key, val.status, val.role);
-            if(val.uid == sessionStorage.getItem('uId')){
+            this.getPlayerData(val.uid, key, val.status, val.role, val.vote);
+            if (val.uid == sessionStorage.getItem('uId')) {
               this.status = val.status;
             }
           }
           this.playerCount++;
         }
-      } if (
+      }
+      if (
         this.currStatus == 'mafiaVote' ||
         this.currStatus == 'allVote' ||
         this.currStatus == 'policeChoose' ||
@@ -58,28 +59,26 @@ export class GameComponent implements OnInit {
       ) {
         this.players = x;
         this.gameStarted = true;
-        this.players.map((x:any)=>{
-          if(x.uid == sessionStorage.getItem('uId')){
+        this.players.map((x: any) => {
+          if (x.uid == sessionStorage.getItem('uId')) {
             this.status = x.status;
           }
-        })
+        });
         console.log(this.players);
       }
     });
     this.commonService.save.subscribe((x) => {
-      debugger
       this.save = x;
     });
     this.commonService.dead.subscribe((x) => {
-      debugger
       this.dead = x;
     });
     this.commonService.currStatus.subscribe(async (x) => {
-      this.players.map((x:any)=>{
-        if(x.uid == sessionStorage.getItem('uId')){
+      this.players.map((x: any) => {
+        if (x.uid == sessionStorage.getItem('uId')) {
           this.status = x.status;
         }
-      })
+      });
       this.currStatus = x;
       if (x == 'whoAmI' && !this.isMod) {
         this.chance = 1;
@@ -107,7 +106,7 @@ export class GameComponent implements OnInit {
         console.log(response);
       } else if (x == 'mafiaVote') {
         this.chance = 1;
-        this.votes = null
+        this.votes = null;
         this.mafiaVote = true;
         this.allVote = false;
         this.policeChoose = false;
@@ -138,6 +137,15 @@ export class GameComponent implements OnInit {
           title: x,
         });
       } else if ((x as string).includes('Wins')) {
+        let res = await this.commonService.postRequest(
+          {
+            uid: sessionStorage.getItem('uId'),
+            gameCode: this.gameCode,
+            role: this.role,
+            result: x,
+          },
+          'updatetesults'
+        );
         Swal.fire({
           icon: 'success',
           title: x,
@@ -167,7 +175,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  async getPlayerData(uid: any, key: any, status:any, role:any) {
+  async getPlayerData(uid: any, key: any, status: any, role: any, vote: any) {
     let data = { uid: uid };
     let res = await this.commonService.postRequest(data, 'getplayerdata');
     if (res.code == 200) {
@@ -178,7 +186,7 @@ export class GameComponent implements OnInit {
         key: key,
         role: role ? role : '',
         status: status,
-        vote: 0,
+        vote: vote ? vote : 0,
         uid: uid,
       };
       this.players.push(player);
@@ -263,7 +271,6 @@ export class GameComponent implements OnInit {
   }
 
   async mafiaDone() {
-    debugger
     let max = 0;
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].vote > max) {
@@ -273,7 +280,7 @@ export class GameComponent implements OnInit {
       this.players[i].vote = 0;
     }
     this.chance = 1;
-    this.commonService.deadPlayer(this.dead);
+    await this.commonService.deadPlayer(this.dead);
     await this.commonService.updatePlayer(this.players);
     this.chance = 1;
     await this.commonService.updateStatus(
@@ -285,8 +292,13 @@ export class GameComponent implements OnInit {
   async safe(i: any) {
     if (this.chance == 1) {
       this.save = i;
+      Swal.fire({
+        icon: 'success',
+        title: 'Response Recorded',
+        confirmButtonText: 'OK',
+      });
     }
-    this.commonService.savePlayer(this.players[i].uid);
+    await this.commonService.savePlayer(this.players[i].uid);
     this.chance--;
   }
 
@@ -324,11 +336,10 @@ export class GameComponent implements OnInit {
   }
 
   async doctorDone() {
-    debugger
     if (this.isMod && this.dead != this.save) {
       let i;
-      for(i = 0; i<this.players.length; i++){
-        if(this.players[i].uid == this.dead){
+      for (i = 0; i < this.players.length; i++) {
+        if (this.players[i].uid == this.dead) {
           break;
         }
       }
@@ -346,6 +357,8 @@ export class GameComponent implements OnInit {
         'No one mudered last night'
       );
     }
+    await this.commonService.deadPlayer(null);
+    await this.commonService.savePlayer(null);
     this.chance = 1;
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
@@ -354,8 +367,8 @@ export class GameComponent implements OnInit {
   }
 
   async allDone() {
-    debugger;
-    let players
+    debugger
+    let players;
     let res = await this.commonService.getRequest(
       {},
       'players?gameCode=' + this.gameCode
@@ -376,9 +389,13 @@ export class GameComponent implements OnInit {
     }
     this.players[dead].status = 'Out';
     for (let i = 0; i < this.players.length; i++) {
+      this.players[i].vote = 0;
       if (this.players[i].role == 'Mafia' && this.players[i].status == 'In') {
         mafia++;
-      } else if(this.players[i].role != 'Mafia' && this.players[i].status == 'In'){
+      } else if (
+        this.players[i].role != 'Mafia' &&
+        this.players[i].status == 'In'
+      ) {
         others++;
       }
     }
@@ -390,10 +407,6 @@ export class GameComponent implements OnInit {
     await this.commonService.postRequest(data, 'syncplayer');
     await this.commonService.updatePlayer(this.players);
     if (mafia >= others) {
-      let res = await this.commonService.postRequest(
-        { uid: sessionStorage.getItem('uId'), gameCode: this.gameCode, role : this.role, result: 'Mafia' },
-        'updatetesults'
-      );
       this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),

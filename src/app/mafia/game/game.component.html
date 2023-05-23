@@ -5,7 +5,7 @@
         </button>
   <div class="dashboard-head mt-5">
     <h3 class="text-light">Game : {{gameCode}}</h3>
-    <p style="color: #79808f">Welcome Back, Devvrat</p>
+    <p style="color: #79808f">Welcome Back, {{name}}</p>
   </div>
   <div class="dashboard-body">
     <div class="row">
@@ -18,8 +18,8 @@
                   <th scope="col">#</th>
                   <th scope="col">DP</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Action</th>
                   <th scope="col">Status</th>
+                  <th scope="col" *ngIf="status != 'Out'">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -33,34 +33,37 @@
                     />
                   </td>
                   <td>{{item.name}}</td>
-                  <td>
+                  <td>{{item.status}}</td>
+                  <td *ngIf="status != 'Out'">
                     <input
                       type="button"
-                      *ngIf="i == 0"
+                      *ngIf="allVote && item.status == 'In' && !isMod"
                       class="btn table-btn btn-success"
-                      value="Vote"
+                      [value]="'Vote ' + item.vote"
+                      (click)="vote(i)"
                     />
                     <input
                       type="button"
-                      *ngIf="i == 2"
+                      *ngIf="mafiaVote && role=='Mafia' && item.status == 'In'"
                       class="btn table-btn btn-danger"
-                      value="Kill"
+                      [value]="'Kill ' + item.vote"
+                      (click)="voteKill(i)"
                     />
                     <input
                       type="button"
-                      *ngIf="i == 3"
+                      *ngIf="policeChoose && role=='Police Man' && item.status == 'In'"
                       class="btn table-btn btn-success"
-                      value="Save"
-                    />
-                    <input
-                      type="button"
-                      *ngIf="i == 4"
-                      class="btn table-btn btn-danger"
                       value="Mafia"
-                      (click)="isMafia()"
+                      (click)="isMafia(i)"
+                    />
+                    <input
+                      type="button"
+                      *ngIf="docSave && role=='Doctor' && item.status == 'In'"
+                      class="btn table-btn btn-danger"
+                      value="Save"
+                      (click)="safe(i)"
                     />
                   </td>
-                  <td>{{item.status}}</td>
                 </tr>
               </tbody>
             </table>
@@ -76,8 +79,11 @@
               <h3 *ngIf="isMod">Moderator</h3>
               <p>Currently</p>
               <h3>Mafias are Choosing Dead Body</h3>
-              <p>{{timeLeft}} Seconds Left....</p>
-              <button *ngIf="isMod" type="submit" class="btn card-btn mt-2" (click)="startGame()">Start Game</button>
+              <button *ngIf="isMod && !gameStarted" type="submit" class="btn card-btn mt-2" (click)="startGame()">Start Game</button>
+              <button *ngIf="isMod && mafiaVote" type="submit" class="btn card-btn mt-2" (click)="mafiaDone()">Mafia Done</button>
+              <button *ngIf="isMod && docSave" type="submit" class="btn card-btn mt-2" (click)="doctorDone()">Doctor Done</button>
+              <button *ngIf="isMod && policeChoose" type="submit" class="btn card-btn mt-2" (click)="policeDone()">Police Done</button>
+              <button *ngIf="isMod && allVote" type="submit" class="btn card-btn mt-2" (click)="allDone()">All Done</button>
             </div>
           </div>
         </div>

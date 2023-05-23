@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
       this.gamePlayed = res.data.data.gamePlayed;
       this.gameVillager = res.data.data.gameVillager;
       this.gameWin = res.data.data.gameWin;
-      this.gameLoose = this.gamePlayed - this.gameWin;
+      this.gameLoose = res.data.data.gameLoose;
     }
   }
 

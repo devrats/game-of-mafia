@@ -13,6 +13,9 @@ export class CommonService {
   principle: Subject<any> = new Subject<any>();
   player: Subject<any> = new Subject<any>();
   currStatus: Subject<any> = new Subject<any>();
+  save: Subject<any> = new Subject<any>();
+  dead: Subject<any> = new Subject<any>();
+  starCountRef:any = ''
   startGame = 0;
   config = {
     headers: {
@@ -79,30 +82,36 @@ export class CommonService {
       gameCode: gameCode,
       players: [],
       gameStart: 0,
-      currStatus : 'nothing'
+      currStatus : 'nothing',
+      save : '',
+      dead:''
     });
   }
 
   async getGame() {
     const db = getDatabase();
     console.log(sessionStorage.getItem('gameCode'));
-    const starCountRef = ref(
+    this.starCountRef = ref(
       db,
       'modgame/' + sessionStorage.getItem('gameCode')
     );
-    onValue(starCountRef, (snapshot) => {
+    onValue(this.starCountRef, (snapshot) => {
       const data = snapshot.val();
       console.log(data);
       if (data.uid == sessionStorage.getItem('uId')) {
         sessionStorage.setItem('isMod', 'true');
         this.player.next(data.players);
         this.currStatus.next(data.currStatus);
+        this.save.next(data.save);
+        this.dead.next(data.dead);
         this.startGame = data.gameStart;
       } else {
         sessionStorage.setItem('isMod', 'false');
         this.player.next(data.players);
         console.log(data.currStatus);
         this.currStatus.next(data.currStatus);
+        this.save.next(data.save);
+        this.dead.next(data.dead);
         this.startGame = data.gameStart;
       }
     });
@@ -120,6 +129,7 @@ export class CommonService {
       set(newRef, {
         uid: sessionStorage.getItem('uId'),
         key: newRef.key,
+        status: 'In'
       });
       dbRef = ref(
         db,
@@ -129,6 +139,7 @@ export class CommonService {
       set(newRef, {
         uid: sessionStorage.getItem('uId'),
         key: newRef.key,
+        status : 'In'
       });
     } catch (error) {
       console.log(error);
@@ -137,6 +148,7 @@ export class CommonService {
 
   async gameStart(players : any) {
     const db = getDatabase();
+    debugger
     try {
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         gameStart: 1,
@@ -158,6 +170,71 @@ export class CommonService {
         currStatus: 'whoAmI',
       });
     } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateStatus(uid:any, status:any){
+    const db = getDatabase();
+    try{
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        currStatus: status,
+      });
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        currStatus: status,
+      });
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  async updatePlayer(players:any){
+    const db = getDatabase();
+    try{
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        players: players,
+      });
+      players.map((x:any)=>x.role = '')
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        players: players,
+      });
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  async savePlayer(i:any){
+    const db = getDatabase();
+    try{
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        save: i,
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        save: i,
+      });
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  detachListner(){
+    this.starCountRef.off();
+  }
+
+  async updateUserGameHistory(){
+
+  }
+
+  async deadPlayer(i:any){
+    const db = getDatabase();
+    try{
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        dead: i,
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        dead: i,
+      });
+    } catch(error){
       console.log(error);
     }
   }

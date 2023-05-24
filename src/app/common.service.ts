@@ -15,7 +15,7 @@ export class CommonService {
   currStatus: Subject<any> = new Subject<any>();
   save: Subject<any> = new Subject<any>();
   dead: Subject<any> = new Subject<any>();
-  starCountRef:any = ''
+  starCountRef: any = '';
   startGame = 0;
   config = {
     headers: {
@@ -82,9 +82,10 @@ export class CommonService {
       gameCode: gameCode,
       players: [],
       gameStart: 0,
-      currStatus : 'nothing',
-      save : '',
-      dead:''
+      currStatus: 'nothing',
+      save: '',
+      dead: '',
+      round: [],
     });
   }
 
@@ -129,7 +130,7 @@ export class CommonService {
       set(newRef, {
         uid: sessionStorage.getItem('uId'),
         key: newRef.key,
-        status: 'In'
+        status: 'In',
       });
       dbRef = ref(
         db,
@@ -139,16 +140,16 @@ export class CommonService {
       set(newRef, {
         uid: sessionStorage.getItem('uId'),
         key: newRef.key,
-        status : 'In'
+        status: 'In',
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async gameStart(players : any) {
+  async gameStart(players: any) {
     const db = getDatabase();
-    debugger
+    debugger;
     try {
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         gameStart: 1,
@@ -159,7 +160,7 @@ export class CommonService {
       update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
         players: players,
       });
-      players.map((x:any)=>x.role = '')
+      players.map((x: any) => (x.role = ''));
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         players: players,
       });
@@ -174,68 +175,139 @@ export class CommonService {
     }
   }
 
-  async updateStatus(uid:any, status:any){
+  async updateStatus(uid: any, status: any) {
     const db = getDatabase();
-    try{
+    try {
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         currStatus: status,
       });
       update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
         currStatus: status,
       });
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  async updatePlayer(players:any){
+  async updatePlayer(players: any) {
     const db = getDatabase();
-    try{
+    try {
       update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
         players: players,
       });
-      players.map((x:any)=>x.role = '')
+      players.map((x: any) => (x.role = ''));
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         players: players,
       });
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  async savePlayer(i:any){
+  async savePlayer(i: any) {
     const db = getDatabase();
-    try{
+    try {
       update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
         save: i,
       });
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         save: i,
       });
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  detachListner(){
+  detachListner() {
     this.starCountRef.off();
   }
 
-  async updateUserGameHistory(){
+  async updateUserGameHistory() {}
 
-  }
-
-  async deadPlayer(i:any){
+  async deadPlayer(i: any) {
     const db = getDatabase();
-    try{
+    try {
       update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
         dead: i,
       });
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         dead: i,
       });
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
+  }
+
+  async round(msg: any) {
+    const db = getDatabase();
+    console.log(sessionStorage.getItem('gameCode'));
+    try {
+      let dbRef = ref(
+        db,
+        'modgame/' + sessionStorage.getItem('gameCode') + '/round'
+      );
+      let newRef = push(dbRef);
+      set(newRef, {
+        msg: msg,
+        key: newRef.key,
+      });
+      dbRef = ref(
+        db,
+        'playergame/' + sessionStorage.getItem('gameCode') + '/round'
+      );
+      newRef = push(dbRef);
+      set(newRef, {
+        msg: msg,
+        key: newRef.key,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getRoundData() {
+    const dbRef = ref(getDatabase());
+    const db = getDatabase();
+    get(child(dbRef, `modgame/${sessionStorage.getItem('gameCode')}`))
+      .then(async (snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val().round);
+          let round = { one: '', two: '', three: '', four: '' };
+          let i = 0;
+          for (var key in snapshot.val().round) {
+            if (Object.prototype.hasOwnProperty.call(snapshot.val().round, key)) {
+              var val = snapshot.val().round[key];
+              console.log(val);
+              if (i == 0) {
+                round.one = val.msg;
+              } else if (i == 1) {
+                round.two = val.msg;
+              } else if (i == 2) {
+                round.three = val.msg;
+              } else if (i == 3) {
+                round.four = val.msg;
+              }
+            }
+            i++;
+          }
+          console.log(round);
+          update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+            round: [],
+          });
+          update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+            round: [],
+          });
+          let data ={
+            round: round,
+            gameCode: sessionStorage.getItem('gameCode')
+          }
+          await this.postRequest(data, 'updateround')
+        } else {
+          console.log('No data available');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

@@ -8,7 +8,25 @@ import { CommonService } from 'src/app/common.service';
   styleUrls: ['./game-history.component.scss']
 })
 export class GameHistoryComponent implements OnInit {
-  ngOnInit(): void {
+  gameCode:any = sessionStorage.getItem('gameHistoryCode')
+  players:any = []
+  round:any = []
+  displayName = sessionStorage.getItem('displayName')
+  result = ''
+  async ngOnInit(): Promise<void> {
+    debugger
+    let res = await this.commonService.postRequest(
+      {
+        gameCode: sessionStorage.getItem('gameHistoryCode'),
+        uid: sessionStorage.getItem('uId'),
+      },
+      'getgame'
+    );
+    if(res.code==200){
+      this.players = res.data.game.players
+      this.round = res.data.game.round
+      this.result = res.data.game.result
+    }
   }
 
   constructor(private router : Router, private commonService: CommonService){

@@ -272,16 +272,18 @@ export class GameComponent implements OnInit {
 
   async mafiaDone() {
     let max = 0;
+    let displayName = '';
     for (let i = 0; i < this.players.length; i++) {
       if (this.players[i].vote > max) {
         max = this.players[i].vote;
         this.dead = this.players[i].uid;
+        displayName = this.players[i].name;
       }
       this.players[i].vote = 0;
     }
     this.chance = 1;
     await this.commonService.deadPlayer(this.dead);
-    await this.commonService.updatePlayer(this.players);
+    await this.commonService.round('Mafia kills ' + displayName);
     this.chance = 1;
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
@@ -297,6 +299,7 @@ export class GameComponent implements OnInit {
         title: 'Response Recorded',
         confirmButtonText: 'OK',
       });
+      await this.commonService.round('Doctor save ' + this.players[i].name);
     }
     await this.commonService.savePlayer(this.players[i].uid);
     this.chance--;
@@ -308,6 +311,9 @@ export class GameComponent implements OnInit {
         uid: this.players[i].uid,
         gameCode: this.gameCode,
       };
+      await this.commonService.round(
+        'Police guess ' + this.players[i].name + ' as mafia'
+      );
       let res = await this.commonService.postRequest(data, 'ismafia');
       if (res.code == 200) {
         console.log(res);
@@ -333,6 +339,7 @@ export class GameComponent implements OnInit {
       sessionStorage.getItem('uId'),
       'doctorSave'
     );
+    await this.commonService.updatePlayer(this.players);
   }
 
   async doctorDone() {
@@ -367,7 +374,7 @@ export class GameComponent implements OnInit {
   }
 
   async allDone() {
-    debugger
+    debugger;
     let players;
     let res = await this.commonService.getRequest(
       {},
@@ -376,6 +383,32 @@ export class GameComponent implements OnInit {
     if (res.code == 200) {
       players = res.data.players;
     }
+    players.sort((a:any, b:any) => {
+      let fa = a.uid.toLowerCase(),
+        fb = b.uid.toLowerCase();
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+
+    this.players.sort((a:any, b:any) => {
+      let fa = a.uid.toLowerCase(),
+        fb = b.uid.toLowerCase();
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+
     let max = 0;
     let dead = 0;
     let mafia = 0;
@@ -406,6 +439,8 @@ export class GameComponent implements OnInit {
     };
     await this.commonService.postRequest(data, 'syncplayer');
     await this.commonService.updatePlayer(this.players);
+    await this.commonService.round('All voted out ' + this.players[dead].name);
+    let roundData = await this.commonService.getRoundData();
     if (mafia >= others) {
       this.chance = 1;
       await this.commonService.updateStatus(

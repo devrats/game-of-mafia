@@ -77,14 +77,17 @@ export class DashboardComponent implements OnInit {
         title: 'Game created successfully',
         html: 'Game Code : ' + gameID + '</br> Share Code With your Friends',
         confirmButtonText: 'Share Code',
-        allowOutsideClick: false
+        allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed) {
           this.router.navigate(['mafia/game']);
         }
       });
-      sessionStorage.setItem('gameCode',gameID);
-      await this.commonService.createModGame(sessionStorage.getItem('uId'), gameID);
+      sessionStorage.setItem('gameCode', gameID);
+      await this.commonService.createModGame(
+        sessionStorage.getItem('uId'),
+        gameID
+      );
       await this.commonService.createPlayerGame(
         sessionStorage.getItem('uId'),
         gameID
@@ -97,7 +100,10 @@ export class DashboardComponent implements OnInit {
       uid: sessionStorage.getItem('uId'),
       gameCode: this.gameCodeForm.get('gameCode')?.value,
     };
-    sessionStorage.setItem('gameCode',this.gameCodeForm.get('gameCode')?.value);
+    sessionStorage.setItem(
+      'gameCode',
+      this.gameCodeForm.get('gameCode')?.value
+    );
     console.log(data);
     let res = await this.commonService.postRequest(data, 'joinGame');
     if (res.code == 200) {
@@ -107,7 +113,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  gameDetails() {
+  async gameDetails(i: any) {
+    let res = await this.commonService.postRequest(
+      {
+        gameCode: sessionStorage.getItem('gameHistoryCode'),
+        uid: sessionStorage.getItem('uId'),
+      },
+      'getgame'
+    );
+    sessionStorage.setItem('gameHistoryCode',this.gameHistory[i].gameCode)
     this.router.navigate(['mafia/gamehistory']);
   }
 

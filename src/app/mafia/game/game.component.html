@@ -88,23 +88,23 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 mt-5" *ngIf="role == 'Mafia'">
+      <div class="col-md-6 mt-5">
         <div class="card">
           <div class="card-header text-light">Chat Window</div>
           <div class="card-body chat-window">
             <ul>
-              <li *ngFor="let i of [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9]">
+              <li *ngFor="let item of chat">
                 <div class="row">
                   <div class="col-2 pe-0 d-flex justify-content-center">
                     <img
-                      src="../../../assets/img/peakpx.jpg"
+                      [src]="item.photo"
                       class="message-dp"
                       alt=""
                     />
                   </div>
                   <div class="col-10 ps-0">
-                    <p class="message">Devvrat Sharma</p>
-                    <p class="message1">We should Kill Jai</p>
+                    <p class="message">{{item.name}}</p>
+                    <p class="message1">{{item.msg}}</p>
                   </div>
                 </div>
               </li>
@@ -116,10 +116,11 @@
                 type="text"
                 name="Message"
                 placeholder="Message"
+                [(ngModel)]="msg"
                 class="form-control dark-input rounded-pill me-3"
                 id="Message"
               />
-              <button class="btn btn-primary rounded-pill pl-1" type="submit">
+              <button class="btn btn-primary rounded-pill pl-1" type="submit" (click)="send()">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </button>
             </div>

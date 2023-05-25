@@ -14,7 +14,6 @@ export class GameHistoryComponent implements OnInit {
   displayName = sessionStorage.getItem('displayName')
   result = ''
   async ngOnInit(): Promise<void> {
-    debugger
     let res = await this.commonService.postRequest(
       {
         gameCode: sessionStorage.getItem('gameHistoryCode'),

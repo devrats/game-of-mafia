@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/common.service';
 import Swal from 'sweetalert2';
+import { ChatService } from '../chat.service';
+import { WebSocketChat } from '../web-socket-chat';
 
 @Component({
   selector: 'app-game',
@@ -27,12 +29,18 @@ export class GameComponent implements OnInit {
   votes: any = null;
   votesKills = null;
   status: any = null;
-  constructor(private router: Router, private commonService: CommonService) {
+  chat : WebSocketChat[] = []
+  msg =''
+  constructor(private router: Router, private commonService: CommonService, private chatService: ChatService) {
     commonService.pageName.next('game');
   }
 
   async ngOnInit(): Promise<void> {
     // this.startTimer();
+    this.chatService.connect();
+    this.chatService.onMessage().subscribe((message: any) => {
+      this.chat.push(message);
+    });
     await this.commonService.getGame();
     this.isMod = JSON.parse(sessionStorage.getItem('isMod') || 'false');
     console.log(this.isMod);
@@ -374,7 +382,6 @@ export class GameComponent implements OnInit {
   }
 
   async allDone() {
-    debugger;
     let players;
     let res = await this.commonService.getRequest(
       {},
@@ -474,5 +481,12 @@ export class GameComponent implements OnInit {
 
   openNavBar() {
     document.getElementById('navBar')?.classList.remove('d-none');
+  }
+
+  send(){
+    let chat = new WebSocketChat(this.name || '', sessionStorage.getItem('pic') || '', this.msg)
+    this.chatService.sendMessage(chat);
+    this.msg = '';
+
   }
 }

@@ -149,7 +149,6 @@ export class CommonService {
 
   async gameStart(players: any) {
     const db = getDatabase();
-    debugger;
     try {
       update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
         gameStart: 1,

@@ -24,7 +24,8 @@ export class GameComponent implements OnInit {
   currStatus = '';
   dead!: number;
   save!: number;
-  chance = 1;
+  docChance = 1;
+  polChance = 1;
   gameStarted = false;
   votes: any = null;
   votesKills = null;
@@ -89,7 +90,6 @@ export class GameComponent implements OnInit {
       });
       this.currStatus = x;
       if (x == 'whoAmI' && !this.isMod) {
-        this.chance = 1;
         let res = await this.commonService.postRequest(
           { uid: sessionStorage.getItem('uId'), gameCode: this.gameCode },
           'whoami'
@@ -113,33 +113,28 @@ export class GameComponent implements OnInit {
         );
         console.log(response);
       } else if (x == 'mafiaVote') {
-        this.chance = 1;
         this.votes = null;
         this.mafiaVote = true;
         this.allVote = false;
         this.policeChoose = false;
         this.docSave = false;
       } else if (x == 'policeChoose') {
-        this.chance = 1;
         this.votesKills = null;
         this.mafiaVote = false;
         this.allVote = false;
         this.policeChoose = true;
         this.docSave = false;
       } else if (x == 'doctorSave') {
-        this.chance = 1;
         this.mafiaVote = false;
         this.allVote = false;
         this.policeChoose = false;
         this.docSave = true;
       } else if (x == 'allVote') {
-        this.chance = 1;
         this.mafiaVote = false;
         this.allVote = true;
         this.policeChoose = false;
         this.docSave = false;
       } else if ((x as string).includes('udered last night')) {
-        this.chance = 1;
         Swal.fire({
           icon: 'success',
           title: x,
@@ -171,6 +166,12 @@ export class GameComponent implements OnInit {
         });
       }
     });
+    this.commonService.docChance.subscribe((x)=>{
+      this.docChance = x
+    })
+    this.commonService.polChance.subscribe((x)=>{
+      this.polChance = x
+    })
     if (sessionStorage.getItem('gameCode')) {
       let res = await this.commonService.postRequest(
         { uid: sessionStorage.getItem('uId'), gameCode: this.gameCode },
@@ -224,7 +225,6 @@ export class GameComponent implements OnInit {
       this.gameStarted = true;
       await this.commonService.postRequest(data1, 'gameStarted');
       await this.commonService.gameStart(this.players);
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         'mafiaVote'
@@ -289,10 +289,8 @@ export class GameComponent implements OnInit {
       }
       this.players[i].vote = 0;
     }
-    this.chance = 1;
     await this.commonService.deadPlayer(this.dead);
     await this.commonService.round('Mafia kills ' + displayName);
-    this.chance = 1;
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
       'policeChoose'
@@ -300,7 +298,7 @@ export class GameComponent implements OnInit {
   }
 
   async safe(i: any) {
-    if (this.chance == 1) {
+    if (this.docChance == 1) {
       this.save = i;
       Swal.fire({
         icon: 'success',
@@ -308,13 +306,18 @@ export class GameComponent implements OnInit {
         confirmButtonText: 'OK',
       });
       await this.commonService.round('Doctor save ' + this.players[i].name);
+      this.commonService.docChanceUsed();;
+    } else{
+      Swal.fire({
+        icon: 'error',
+        title: 'You Already Used Your Chance',
+      });
     }
     await this.commonService.savePlayer(this.players[i].uid);
-    this.chance--;
   }
 
   async isMafia(i: any) {
-    if (this.chance == 1) {
+    if (this.polChance == 1) {
       let data = {
         uid: this.players[i].uid,
         gameCode: this.gameCode,
@@ -336,13 +339,17 @@ export class GameComponent implements OnInit {
             title: 'You Missed The Chance',
           });
         }
+        this.commonService.polChanceUsed();
       }
-      this.chance--;
+    } else{
+      Swal.fire({
+        icon: 'error',
+        title: 'You Already Used Your Chance',
+      });
     }
   }
 
   async policeDone() {
-    this.chance = 1;
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
       'doctorSave'
@@ -360,13 +367,11 @@ export class GameComponent implements OnInit {
       }
       this.players[i].status = 'Out';
       await this.commonService.updatePlayer(this.players);
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         this.players[i].name + ' was mudered last night'
       );
     } else if (this.isMod && this.dead == this.save) {
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         'No one mudered last night'
@@ -374,7 +379,6 @@ export class GameComponent implements OnInit {
     }
     await this.commonService.deadPlayer(null);
     await this.commonService.savePlayer(null);
-    this.chance = 1;
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
       'allVote'
@@ -447,15 +451,14 @@ export class GameComponent implements OnInit {
     await this.commonService.postRequest(data, 'syncplayer');
     await this.commonService.updatePlayer(this.players);
     await this.commonService.round('All voted out ' + this.players[dead].name);
+    await this.commonService.updateChances();
     let roundData = await this.commonService.getRoundData();
     if (mafia >= others) {
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         'Mafia Wins'
       );
     } else if (mafia == 0) {
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         'Villagers Wins'
@@ -471,7 +474,6 @@ export class GameComponent implements OnInit {
       //     four: 'Villagers voted out Danial',
       //   },
       // };
-      this.chance = 1;
       await this.commonService.updateStatus(
         sessionStorage.getItem('uId'),
         'mafiaVote'

@@ -16,6 +16,8 @@ export class CommonService {
   currStatus: Subject<any> = new Subject<any>();
   save: Subject<any> = new Subject<any>();
   dead: Subject<any> = new Subject<any>();
+  docChance: Subject<any> = new Subject<any>();
+  polChance: Subject<any> = new Subject<any>();
   starCountRef: any = '';
   startGame = 0;
   config = {
@@ -97,6 +99,8 @@ export class CommonService {
       save: '',
       dead: '',
       round: [],
+      docChance: 1,
+      polChance :1
     });
   }
 
@@ -116,6 +120,8 @@ export class CommonService {
         this.currStatus.next(data.currStatus);
         this.save.next(data.save);
         this.dead.next(data.dead);
+        this.docChance.next(data.docChance);
+        this.polChance.next(data.polChance);
         this.startGame = data.gameStart;
       } else {
         sessionStorage.setItem('isMod', 'false');
@@ -124,6 +130,8 @@ export class CommonService {
         this.currStatus.next(data.currStatus);
         this.save.next(data.save);
         this.dead.next(data.dead);
+        this.docChance.next(data.docChance);
+        this.polChance.next(data.polChance);
         this.startGame = data.gameStart;
       }
     });
@@ -319,5 +327,49 @@ export class CommonService {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  async docChanceUsed() {
+    const db = getDatabase();
+    try {
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        docChance: 0,
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        docChance: 0,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async polChanceUsed() {
+    const db = getDatabase();
+    try {
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        polChance: 0,
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        polChance: 0,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateChances() {
+    const db = getDatabase();
+    try {
+      update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
+        docChance: 1,
+        polChance: 1
+      });
+      update(ref(db, 'playergame/' + sessionStorage.getItem('gameCode')), {
+        docChance: 1,
+        polChance: 1
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -5,6 +5,7 @@ import { child, get, getDatabase, push, update } from 'firebase/database';
 import { ref, set } from 'firebase/database';
 import { AuthService } from './authentication/auth.service';
 import { onValue } from 'firebase/database';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -24,26 +25,32 @@ export class CommonService {
   };
   database = getDatabase(this.authServise.app);
   public pageName: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  constructor(private authServise: AuthService) {}
+  constructor(private authServise: AuthService, private spinner : NgxSpinnerService) {}
   async getRequest(data: any, url: string) {
+    this.spinner.show()
     try {
       console.log(data);
       let res = await axios.get('http://localhost:3000/' + url, this.config);
       if (res.status == 200) {
         console.log(res.data);
+        this.spinner.hide()
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
         console.log(res.data);
+        this.spinner.hide()
         return { data: res.data, code: 201 };
       }
     } catch (error: any) {
       console.log(error);
+      this.spinner.hide()
       return error;
     }
+    this.spinner.hide()
   }
 
   async postRequest(data: any, url: string) {
+    this.spinner.show()
     try {
       console.log(data);
       let res = await axios.post(
@@ -53,16 +60,20 @@ export class CommonService {
       );
       if (res.status == 200) {
         console.log(res.data);
+        this.spinner.hide()
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
         console.log(res.data);
+        this.spinner.hide()
         return { data: res.data, code: 201 };
       }
     } catch (error: any) {
       console.log(error);
+      this.spinner.hide()
       return error;
     }
+    this.spinner.hide()
   }
 
   async createModGame(uid: any, gameCode: any) {

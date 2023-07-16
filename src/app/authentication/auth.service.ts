@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { async, Subject } from 'rxjs';
 import axios from 'axios';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -32,12 +33,14 @@ export class AuthService {
     },
   };
 
+  constructor(private spinner : NgxSpinnerService){}
+
   app = initializeApp(this.firebaseConfig);
   analytics = getAnalytics(this.app);
   provider = new GoogleAuthProvider();
-  constructor() {}
   auth = getAuth();
   async signInWithGoogle() {
+    this.spinner.show()
     signInWithPopup(this.auth, this.provider)
       .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -47,6 +50,7 @@ export class AuthService {
         const user = result.user;
         let y = await this.getRequest(user, 'login');
         this.principle.next(y);
+        this.spinner.hide()
         // return res;
       })
       .catch((error) => {
@@ -58,11 +62,14 @@ export class AuthService {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         this.principle.next(errorMessage);
+        this.spinner.hide()
         // ...
       });
+      this.spinner.hide()
   }
 
   async getRequest(data: any, url: string) {
+    this.spinner.show()
     try {
       console.log(data);
       let res = await axios.post(
@@ -77,26 +84,34 @@ export class AuthService {
         sessionStorage.setItem('email', res.data.email);
         sessionStorage.setItem('displayName', res.data.displayName);
         sessionStorage.setItem('pic', res.data.photo);
+        this.spinner.hide()
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
         console.log(res.data);
+        this.spinner.hide()
         return { data: res.data, code: 201 };
       }
     } catch (error: any) {
       console.log(error);
+      this.spinner.hide()
       return error;
     }
+    this.spinner.hide()
   }
 
   async signOut() {
+    this.spinner.show()
     signOut(this.auth)
       .then(() => {
         sessionStorage.clear();
         console.log('sign out');
+        this.spinner.hide()
       })
       .catch((error) => {
         // An error happened.
+        this.spinner.hide()
       });
+      this.spinner.hide()
   }
 }

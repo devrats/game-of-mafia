@@ -135,6 +135,8 @@
 
 .table {
   font-size: 14px;
+  --bs-table-color : inherit !important;
+  --bs-table-bg : inherit !important
 }
 
 .progress-circle {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MafiaRoutingModule } from './mafia-routing.module';
@@ -9,6 +9,8 @@ import { ErrorComponent } from './error/error.component';
 import { GameHistoryComponent } from './game-history/game-history.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MafiaRoutingModule,
     NgCircleProgressModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ]
 })
 export class MafiaModule { }

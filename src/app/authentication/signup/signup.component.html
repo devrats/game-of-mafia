@@ -25,6 +25,9 @@
               autocomplete="off"
               formControlName="name"
             />
+            <div *ngIf="signUpForm.get('name')?.touched && signUpForm.get('name')?.invalid" class="text-danger mb-2">
+              Please enter valid name
+            </div>
           </div>
           <div class="mb-3">
             <input
@@ -37,6 +40,9 @@
               autocomplete="off"
               formControlName="email"
             />
+            <div *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid" class="text-danger mb-2">
+              Please enter valid user name
+            </div>
           </div>
           <div class="mb-3">
             <input
@@ -47,6 +53,9 @@
               id="exampleInputPassword1"
               formControlName="password"
             />
+            <div *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid" class="text-danger mb-2">
+              Please enter valid password
+            </div>
           </div>
           <div class="container text-center">
             <a class="bn31" (click)="signUp()"><span class="bn31span">Sign Up</span></a>

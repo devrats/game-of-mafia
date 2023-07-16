@@ -25,6 +25,9 @@
               autocomplete="off"
               formControlName="email"
             />
+            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-danger mb-2">
+              Please enter valid user name
+            </div>
           </div>
           <div class="mb-3">
             <input
@@ -35,6 +38,9 @@
               id="exampleInputPassword1"
               formControlName="password"
             />
+            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger mb-2">
+              Please enter valid password
+            </div>
           </div>
           <div class="container text-center">
             <a class="bn31" (click)="login()"><span class="bn31span">Log in</span></a>

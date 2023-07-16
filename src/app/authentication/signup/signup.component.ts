@@ -35,6 +35,10 @@ export class SignupComponent implements OnInit {
 
   async signUp(){
     console.log(this.signUpForm);
+    this.signUpForm.markAllAsTouched();
+    if(this.signUpForm.invalid){
+      return;
+    }
     let data = {
       displayName: this.signUpForm.get('name')?.value,
       email: this.signUpForm.get('email')?.value,

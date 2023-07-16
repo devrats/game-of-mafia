@@ -33,6 +33,10 @@ export class FeedbackComponent implements OnInit {
 
   async submit(){
     console.log(this.rating);
+    this.rating.markAllAsTouched();
+    if(this.rating.invalid){
+      return;
+    }
     let data = {
       star: this.rating.get('star')?.value,
       comments : this.rating.get('comments')?.value,

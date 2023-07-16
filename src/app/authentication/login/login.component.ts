@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
+    this.loginForm.markAllAsTouched();
+    if(this.loginForm.invalid){
+      return;
+    }
     console.log(this.loginForm);
     let data = {
       email: this.loginForm.get('email')?.value,

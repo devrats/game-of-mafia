@@ -96,10 +96,6 @@ export class DashboardComponent implements OnInit {
   }
 
   async joinGame() {
-    this.gameCodeForm.markAllAsTouched();
-    if(this.gameCodeForm.invalid){
-      return;
-    }
     let data = {
       uid: sessionStorage.getItem('uId'),
       gameCode: this.gameCodeForm.get('gameCode')?.value,

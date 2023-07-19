@@ -13,7 +13,7 @@ export class ChatService {
   constructor() { }
 
   connect(): void {
-    this.socket = io('http://localhost:3001/');
+    this.socket = io('https://mafia-backend.onrender.com/');
     console.log("connection Success");
     
   }

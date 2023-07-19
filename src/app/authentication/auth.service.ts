@@ -73,7 +73,7 @@ export class AuthService {
     try {
       console.log(data);
       let res = await axios.post(
-        'http://localhost:3000/' + url,
+        'https://mafia-backend.onrender.com/' + url,
         data,
         this.config
       );

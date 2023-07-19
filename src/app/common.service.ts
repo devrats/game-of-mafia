@@ -32,7 +32,7 @@ export class CommonService {
     this.spinner.show()
     try {
       console.log(data);
-      let res = await axios.get('http://localhost:3000/' + url, this.config);
+      let res = await axios.get('https://mafia-backend.onrender.com/' + url, this.config);
       if (res.status == 200) {
         console.log(res.data);
         this.spinner.hide()
@@ -56,7 +56,7 @@ export class CommonService {
     try {
       console.log(data);
       let res = await axios.post(
-        'http://localhost:3000/' + url,
+        'https://mafia-backend.onrender.com/' + url,
         data,
         this.config
       );

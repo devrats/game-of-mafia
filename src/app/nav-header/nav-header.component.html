@@ -1,7 +1,7 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark p-0" *ngIf="!isShowSideBar">
     <div class="container-fluid">
-        <a class="navbar-brand logo text-light" href="#">M a f i a</a>
+        <a class="navbar-brand logo text-light" (click)="navigateToLogin()">M a f i a</a>
         <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,11 +9,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" (click)="navigateTosignUp()"
+                    <a class="nav-link" (click)="navigateTosignUp()"
                        >Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" (click)="navigateToLogin()"
+                    <a class="nav-link" (click)="navigateToLogin()"
                        >Log in</a>
                 </li>
             </ul>

@@ -1,7 +1,7 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 <div class="theme-navbar d-none d-md-block" *ngIf="isShowSideBar" id="navBar">
   <div class="heading">
-    <a class="navbar-brand text-light" href="#">Mafia</a>
+    <a class="navbar-brand text-light" (click)="navigateToDashboard()">Mafia</a>
     <div class="pull-right mt-2 d-block d-md-none">
         <img (click)="closeNavBar()" src="../../assets/img/pngaaa.com-966788.png" alt="">
     </div>
@@ -22,15 +22,15 @@
       <ul>
         <li>
           <i class="fa fa-tachometer active" [ngClass]="{active:pageName=='dashboard'}" aria-hidden="true"></i>
-          <a (click)="navigateToDashboard()" href="#" [ngClass]="{active:pageName=='dashboard'}">Dashboard</a>
+          <a (click)="navigateToDashboard()" [ngClass]="{active:pageName=='dashboard'}">Dashboard</a>
         </li>
         <li>
           <i class="fa fa-gamepad" aria-hidden="true" [ngClass]="{active:pageName=='game'}"></i>
-          <a (click)="navigateToGame()" href="#" [ngClass]="{active:pageName=='game'}">Game</a>
+          <a (click)="navigateToGame()" [ngClass]="{active:pageName=='game'}">Game</a>
         </li>
         <li>
           <i class="fa fa-comments" aria-hidden="true" [ngClass]="{active:pageName=='feedback'}"></i>
-          <a (click)="navigateToFeedback()" href="#" [ngClass]="{active:pageName=='feedback'}"> Feedback</a>
+          <a (click)="navigateToFeedback()" [ngClass]="{active:pageName=='feedback'}"> Feedback</a>
         </li>
         <li (click)="logOut()" class="text-light">
           <i class="fa fa-sign-out" aria-hidden="true" ></i>

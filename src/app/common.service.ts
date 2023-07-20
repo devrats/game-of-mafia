@@ -31,15 +31,12 @@ export class CommonService {
   async getRequest(data: any, url: string) {
     this.spinner.show()
     try {
-      console.log(data);
       let res = await axios.get('https://mafia-backend.onrender.com/' + url, this.config);
       if (res.status == 200) {
-        console.log(res.data);
         this.spinner.hide()
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
-        console.log(res.data);
         this.spinner.hide()
         return { data: res.data, code: 201 };
       }
@@ -54,19 +51,16 @@ export class CommonService {
   async postRequest(data: any, url: string) {
     this.spinner.show()
     try {
-      console.log(data);
       let res = await axios.post(
         'https://mafia-backend.onrender.com/' + url,
         data,
         this.config
       );
       if (res.status == 200) {
-        console.log(res.data);
         this.spinner.hide()
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
-        console.log(res.data);
         this.spinner.hide()
         return { data: res.data, code: 201 };
       }
@@ -106,14 +100,12 @@ export class CommonService {
 
   async getGame() {
     const db = getDatabase();
-    console.log(sessionStorage.getItem('gameCode'));
     this.starCountRef = ref(
       db,
       'modgame/' + sessionStorage.getItem('gameCode')
     );
-    onValue(this.starCountRef, (snapshot) => {
+    await onValue(this.starCountRef, async (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       if (data.uid == sessionStorage.getItem('uId')) {
         sessionStorage.setItem('isMod', 'true');
         this.player.next(data.players);
@@ -126,7 +118,6 @@ export class CommonService {
       } else {
         sessionStorage.setItem('isMod', 'false');
         this.player.next(data.players);
-        console.log(data.currStatus);
         this.currStatus.next(data.currStatus);
         this.save.next(data.save);
         this.dead.next(data.dead);
@@ -139,7 +130,6 @@ export class CommonService {
 
   async joinGame() {
     const db = getDatabase();
-    console.log(sessionStorage.getItem('gameCode'));
     try {
       let dbRef = ref(
         db,
@@ -258,7 +248,6 @@ export class CommonService {
 
   async round(msg: any) {
     const db = getDatabase();
-    console.log(sessionStorage.getItem('gameCode'));
     try {
       let dbRef = ref(
         db,
@@ -289,13 +278,11 @@ export class CommonService {
     get(child(dbRef, `modgame/${sessionStorage.getItem('gameCode')}`))
       .then(async (snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val().round);
           let round = { one: '', two: '', three: '', four: '' };
           let i = 0;
           for (var key in snapshot.val().round) {
             if (Object.prototype.hasOwnProperty.call(snapshot.val().round, key)) {
               var val = snapshot.val().round[key];
-              console.log(val);
               if (i == 0) {
                 round.one = val.msg;
               } else if (i == 1) {
@@ -308,7 +295,6 @@ export class CommonService {
             }
             i++;
           }
-          console.log(round);
           update(ref(db, 'modgame/' + sessionStorage.getItem('gameCode')), {
             round: [],
           });
@@ -321,7 +307,6 @@ export class CommonService {
           }
           await this.postRequest(data, 'updateround')
         } else {
-          console.log('No data available');
         }
       })
       .catch((error) => {

@@ -38,20 +38,17 @@ export class GameComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // this.startTimer();
+    await this.commonService.getGame();
     this.chatService.connect();
     this.chatService.onMessage().subscribe((message: any) => {
       this.chat.push(message);
     });
-    await this.commonService.getGame();
-    this.isMod = JSON.parse(sessionStorage.getItem('isMod') || 'false');
-    console.log(this.isMod);
     this.commonService.player.subscribe((x) => {
       if (this.commonService.startGame == 0) {
         this.players = [];
         for (var key in x) {
           if (Object.prototype.hasOwnProperty.call(x, key)) {
             var val = x[key];
-            console.log(val);
             this.getPlayerData(val.uid, key, val.status, val.role, val.vote);
             if (val.uid == sessionStorage.getItem('uId')) {
               this.status = val.status;
@@ -73,7 +70,6 @@ export class GameComponent implements OnInit {
             this.status = x.status;
           }
         });
-        console.log(this.players);
       }
     });
     this.commonService.save.subscribe((x) => {
@@ -95,7 +91,6 @@ export class GameComponent implements OnInit {
           'whoami'
         );
         if (res.code == 200) {
-          console.log(res);
           this.role = res.data.role;
           Swal.fire({
             icon: 'success',
@@ -111,7 +106,6 @@ export class GameComponent implements OnInit {
           },
           'updateusergamehistory'
         );
-        console.log(response);
       } else if (x == 'mafiaVote') {
         this.votes = null;
         this.mafiaVote = true;
@@ -178,17 +172,16 @@ export class GameComponent implements OnInit {
         'whoami'
       );
       if (res.code == 200) {
-        console.log(res);
         this.role = res.data.role;
       }
     }
+    this.isMod = JSON.parse(sessionStorage.getItem('isMod') || 'false');
   }
 
   async getPlayerData(uid: any, key: any, status: any, role: any, vote: any) {
     let data = { uid: uid };
     let res = await this.commonService.postRequest(data, 'getplayerdata');
     if (res.code == 200) {
-      console.log(res);
       let player = {
         name: res.data.displayName,
         dp: '../../assets/img/' + res.data.photo + '.jpg',
@@ -199,7 +192,6 @@ export class GameComponent implements OnInit {
         uid: uid,
       };
       this.players.push(player);
-      console.log(this.players);
     }
   }
 
@@ -211,13 +203,11 @@ export class GameComponent implements OnInit {
     );
     if (res.code == 200) {
       let mafiaRes = this.getRandom(4);
-      console.log(mafiaRes);
       this.players.map((x: any) => {
         if (x.role == '') {
           x.role = 'Villager';
         }
       });
-      console.log(this.players);
       let data1 = {
         gameCode: this.gameCode,
         players: this.players,
@@ -236,8 +226,13 @@ export class GameComponent implements OnInit {
     var result = new Array(n),
       len = this.players.length,
       taken = new Array(len);
-    if (n > len)
+    if (n > len){
+      Swal.fire({
+        icon: 'error',
+        title: 'Minimum 5 players are required',
+      });
       throw new RangeError('getRandom: more elements taken than available');
+    }
     while (n--) {
       var x = Math.floor(Math.random() * len);
       result[n] = this.players[x in taken ? taken[x] : x].key;
@@ -327,7 +322,6 @@ export class GameComponent implements OnInit {
       );
       let res = await this.commonService.postRequest(data, 'ismafia');
       if (res.code == 200) {
-        console.log(res);
         if (res.data.role) {
           Swal.fire({
             icon: 'success',

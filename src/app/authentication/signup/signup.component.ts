@@ -34,7 +34,6 @@ export class SignupComponent implements OnInit {
   }
 
   async signUp(){
-    console.log(this.signUpForm);
     this.signUpForm.markAllAsTouched();
     if(this.signUpForm.invalid){
       return;

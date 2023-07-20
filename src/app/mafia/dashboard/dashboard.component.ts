@@ -50,7 +50,6 @@ export class DashboardComponent implements OnInit {
       data,
       'usergamehistory?uid=' + data.uid
     );
-    console.log(res);
     if (res.code == 200) {
       this.gameHistory = res.data.data.gameHistory;
       this.gameMafia = res.data.data.gameMafia;
@@ -70,7 +69,6 @@ export class DashboardComponent implements OnInit {
       'createGame?uid=' + data.uid
     );
     if (res.code == 200) {
-      console.log(res);
       let gameID = JSON.stringify(res.data.gameID);
       Swal.fire({
         icon: 'success',
@@ -108,10 +106,8 @@ export class DashboardComponent implements OnInit {
       'gameCode',
       this.gameCodeForm.get('gameCode')?.value
     );
-    console.log(data);
     let res = await this.commonService.postRequest(data, 'joinGame');
     if (res.code == 200) {
-      console.log(res.data);
       await this.commonService.joinGame();
       this.router.navigate(['mafia/game']);
     }

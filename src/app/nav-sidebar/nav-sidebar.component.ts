@@ -12,14 +12,10 @@ export class NavSidebarComponent implements OnInit {
   isShowSideBar: boolean = true;
   pageName: string = 'dashboard';
   displayName = '';
-  photo = sessionStorage.getItem('pic') || '';
+  photo = sessionStorage.getItem('pic') || '1';
   src = '';
 
-  ngOnInit(): void {
-    this.src = '../../assets/img/' + this.photo + '.jpg'
-    this.displayName = sessionStorage.getItem('displayName') || '';
-    console.log(this.displayName);
-  }
+  ngOnInit(): void {}
 
   constructor(
     private commonService: CommonService,
@@ -27,13 +23,15 @@ export class NavSidebarComponent implements OnInit {
     private router: Router
   ) {
     commonService.pageName.subscribe((x) => {
-      console.log(x);
       this.pageName = x;
       if (x == 'signIn' || x == 'logIn') {
         this.isShowSideBar = false;
       } else {
         this.isShowSideBar = true;
       }
+      this.photo = sessionStorage.getItem('pic') || '1';
+      this.src = '../../assets/img/' + this.photo + '.jpg';
+      this.displayName = sessionStorage.getItem('displayName') || '';
     });
   }
 
@@ -44,5 +42,17 @@ export class NavSidebarComponent implements OnInit {
   logOut() {
     this.auth.signOut();
     this.router.navigate(['login']);
+  }
+
+  navigateToGame() {
+    this.router.navigate(['mafia/game']);
+  }
+
+  navigateToFeedback() {
+    this.router.navigate(['mafia/feedback']);
+  }
+
+  navigateToDashboard() {
+    this.router.navigate(['mafia/dashboard']);
   }
 }

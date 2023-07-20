@@ -22,15 +22,15 @@
       <ul>
         <li>
           <i class="fa fa-tachometer active" [ngClass]="{active:pageName=='dashboard'}" aria-hidden="true"></i>
-          <a href="mafia/dashboard" [ngClass]="{active:pageName=='dashboard'}">Dashboard</a>
+          <a (click)="navigateToDashboard()" href="#" [ngClass]="{active:pageName=='dashboard'}">Dashboard</a>
         </li>
         <li>
           <i class="fa fa-gamepad" aria-hidden="true" [ngClass]="{active:pageName=='game'}"></i>
-          <a href="mafia/game" [ngClass]="{active:pageName=='game'}">Game</a>
+          <a (click)="navigateToGame()" href="#" [ngClass]="{active:pageName=='game'}">Game</a>
         </li>
         <li>
           <i class="fa fa-comments" aria-hidden="true" [ngClass]="{active:pageName=='feedback'}"></i>
-          <a href="mafia/feedback" [ngClass]="{active:pageName=='feedback'}"> Feedback</a>
+          <a (click)="navigateToFeedback()" href="#" [ngClass]="{active:pageName=='feedback'}"> Feedback</a>
         </li>
         <li (click)="logOut()" class="text-light">
           <i class="fa fa-sign-out" aria-hidden="true" ></i>

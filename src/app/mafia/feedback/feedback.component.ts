@@ -32,7 +32,6 @@ export class FeedbackComponent implements OnInit {
   }
 
   async submit(){
-    console.log(this.rating);
     this.rating.markAllAsTouched();
     if(this.rating.invalid){
       return;
@@ -66,7 +65,6 @@ export class FeedbackComponent implements OnInit {
       case '5': this.note = "Loved it!!"
       break;
     }
-    console.log(this.note);
 
   }
 

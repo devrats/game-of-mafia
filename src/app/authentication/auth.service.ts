@@ -41,7 +41,7 @@ export class AuthService {
   auth = getAuth();
   async signInWithGoogle() {
     this.spinner.show()
-    signInWithPopup(this.auth, this.provider)
+    await signInWithPopup(this.auth, this.provider)
       .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -71,14 +71,12 @@ export class AuthService {
   async getRequest(data: any, url: string) {
     this.spinner.show()
     try {
-      console.log(data);
       let res = await axios.post(
         'https://mafia-backend.onrender.com/' + url,
         data,
         this.config
       );
       if (res.status == 200) {
-        console.log(res.data);
         sessionStorage.setItem('token', res.data.jwt);
         sessionStorage.setItem('uId', res.data.uid);
         sessionStorage.setItem('email', res.data.email);
@@ -88,7 +86,6 @@ export class AuthService {
         return { data: res.data, code: 200 };
       }
       if (res.status == 201) {
-        console.log(res.data);
         this.spinner.hide()
         return { data: res.data, code: 201 };
       }
@@ -105,7 +102,6 @@ export class AuthService {
     signOut(this.auth)
       .then(() => {
         sessionStorage.clear();
-        console.log('sign out');
         this.spinner.hide()
       })
       .catch((error) => {

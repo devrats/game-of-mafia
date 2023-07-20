@@ -43,13 +43,11 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.invalid){
       return;
     }
-    console.log(this.loginForm);
     let data = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
     };
     let y = await this.auth.getRequest(data, 'signin');
-    console.log(y);
     if(y.code==200){
       this.router.navigate(['mafia/dashboard']);
     } else{

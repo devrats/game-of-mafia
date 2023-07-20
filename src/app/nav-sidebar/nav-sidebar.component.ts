@@ -45,14 +45,26 @@ export class NavSidebarComponent implements OnInit {
   }
 
   navigateToGame() {
+    if(this.commonService.showHideNavBar){
+      this.closeNavBar();
+    }
+    this.commonService.showHideNavBar = false;
     this.router.navigate(['mafia/game']);
   }
 
   navigateToFeedback() {
+    if(this.commonService.showHideNavBar){
+      this.closeNavBar();
+    }
+    this.commonService.showHideNavBar = false;
     this.router.navigate(['mafia/feedback']);
   }
 
   navigateToDashboard() {
+    if(this.commonService.showHideNavBar){
+      this.closeNavBar();
+    }
+    this.commonService.showHideNavBar = false;
     this.router.navigate(['mafia/dashboard']);
   }
 }

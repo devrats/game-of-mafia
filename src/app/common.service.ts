@@ -20,6 +20,7 @@ export class CommonService {
   polChance: Subject<any> = new Subject<any>();
   starCountRef: any = '';
   startGame = 0;
+  showHideNavBar: boolean = false;
   config = {
     headers: {
       'Content-Type': 'application/JSON',

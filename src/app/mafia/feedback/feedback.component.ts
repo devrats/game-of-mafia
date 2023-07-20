@@ -81,6 +81,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   openNavBar(){
+    this.commonService.showHideNavBar = true;
     document.getElementById('navBar')?.classList.remove('d-none');
   }
 }

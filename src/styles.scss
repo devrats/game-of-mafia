@@ -207,14 +207,14 @@ input:-webkit-autofill:active{
 }
 
 ::placeholder {
-  color: white;
-  opacity: 1; /* Firefox */
+  color: white !important;
+  opacity: 1 !important; /* Firefox */
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
- color: white;
+ color: white !important;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
- color: white;
+ color: white !important;
 }

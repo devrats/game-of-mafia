@@ -80,6 +80,12 @@ export class CommonService {
       gameCode: gameCode,
       player: [],
       gameStart: 0,
+      currStatus: 'nothing',
+      save: '',
+      dead: '',
+      round: [],
+      docChance: 1,
+      polChance :1
     });
   }
 

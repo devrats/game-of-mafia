@@ -285,11 +285,12 @@ export class GameComponent implements OnInit {
       this.players[i].vote = 0;
     }
     await this.commonService.deadPlayer(this.dead);
+    await this.commonService.updatePlayer(this.players);
     await this.commonService.round('Mafia kills ' + displayName);
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
       'policeChoose'
-    );
+      );
   }
 
   async safe(i: any) {
@@ -300,6 +301,7 @@ export class GameComponent implements OnInit {
         title: 'Response Recorded',
         confirmButtonText: 'OK',
       });
+      await this.commonService.savePlayer(this.players[i].uid);
       await this.commonService.round('Doctor save ' + this.players[i].name);
       this.commonService.docChanceUsed();;
     } else{
@@ -308,7 +310,6 @@ export class GameComponent implements OnInit {
         title: 'You Already Used Your Chance',
       });
     }
-    await this.commonService.savePlayer(this.players[i].uid);
   }
 
   async isMafia(i: any) {
@@ -344,11 +345,14 @@ export class GameComponent implements OnInit {
   }
 
   async policeDone() {
+    for (let i = 0; i < this.players.length; i++) {
+      this.players[i].vote = 0;
+    }
+    await this.commonService.updatePlayer(this.players);
     await this.commonService.updateStatus(
       sessionStorage.getItem('uId'),
       'doctorSave'
     );
-    await this.commonService.updatePlayer(this.players);
   }
 
   async doctorDone() {

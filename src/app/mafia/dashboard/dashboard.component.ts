@@ -98,18 +98,31 @@ export class DashboardComponent implements OnInit {
     if(this.gameCodeForm.invalid){
       return;
     }
+    if(this.commonService.startGame == 1){
+      Swal.fire({
+        icon: 'error',
+        title: 'Game already started',
+      })
+      return;
+    }
     let data = {
       uid: sessionStorage.getItem('uId'),
       gameCode: this.gameCodeForm.get('gameCode')?.value,
     };
-    sessionStorage.setItem(
-      'gameCode',
-      this.gameCodeForm.get('gameCode')?.value
-    );
+    
     let res = await this.commonService.postRequest(data, 'joinGame');
     if (res.code == 200) {
+      sessionStorage.setItem(
+        'gameCode',
+        this.gameCodeForm.get('gameCode')?.value
+      );
       await this.commonService.joinGame();
       this.router.navigate(['mafia/game']);
+    } if(res.code == 201){
+      Swal.fire({
+        icon: 'error',
+        title: 'Already in the game',
+      })
     }
   }
 

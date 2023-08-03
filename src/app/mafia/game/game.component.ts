@@ -196,13 +196,13 @@ export class GameComponent implements OnInit {
   }
 
   async startGame() {
+    let mafiaRes = this.getRandom(4);
     let data = { gameCode: this.gameCode };
     let res = await this.commonService.getRequest(
       data,
       'startGame?gameCode=' + this.gameCode
     );
     if (res.code == 200) {
-      let mafiaRes = this.getRandom(4);
       this.players.map((x: any) => {
         if (x.role == '') {
           x.role = 'Villager';

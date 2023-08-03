@@ -6,6 +6,7 @@ import { ref, set } from 'firebase/database';
 import { AuthService } from './authentication/auth.service';
 import { onValue } from 'firebase/database';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +69,10 @@ export class CommonService {
     } catch (error: any) {
       console.log(error);
       this.spinner.hide()
+      Swal.fire({
+        icon: 'error',
+        title: 'Game not exist',
+      })
       return error;
     }
     this.spinner.hide()
